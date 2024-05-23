@@ -2,24 +2,44 @@ import { useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useEffect } from "react";
 
-export default function Cube({ x, y, z, size }) {
+export default function Cube({ x, y, z, size, id }) {
     var ref = useRef();
     var colorref = useRef("orange");
-    var seedref = useRef(Math.random() * 100);
+    var seedref = useRef(Math.random() - 0.5);
+    var jarref = useRef(0);
     var scrollY = useScroll();
 
+    var rotationref = useRef({
+        x: Math.random() * 100,
+        y: Math.random() * 100,
+    });
     var directionref = useRef({ xacc: 0, yacc: 0, xvel: 0, yvel: 0 });
-
-    useEffect(() => {
-        ref.current.rotation.x = Math.random();
-    }, []);
 
     useFrame((state, delta) => {
         //add fast rotation on hover
 
-        //scrolling
-        ref.current.rotation.x += delta;
-        ref.current.rotation.y = scrollY.offset * 50 + seedref.current;
+        //rotation
+
+        //get chnage in rotation for frame
+        var deltax = seedref.current * 0.03 + jarref.current * seedref.current;
+        var deltay = seedref.current * 0.03 + jarref.current * seedref.current;
+
+        //get current scrolloffset
+        var scrolloffy =
+            scrollY.offset * 50 * seedref.current + seedref.current * 50;
+        var scrolloffx =
+            scrollY.offset * 50 * seedref.current + seedref.current * 50;
+
+        //increment rotationref
+        rotationref.current.x += deltax;
+        rotationref.current.y += deltay;
+
+        ref.current.rotation.x = rotationref.current.x + scrolloffx;
+        ref.current.rotation.y = rotationref.current.y + scrolloffy;
+
+        if (jarref.current > 0) {
+            jarref.current *= 0.98;
+        }
 
         //jerk
         var xaccchange = Math.random() * 0.001 - 0.001 / 2;
@@ -35,8 +55,8 @@ export default function Cube({ x, y, z, size }) {
         ref.current.position.y += directionref.current.yvel;
 
         //damping
-        directionref.current.xvel *= 0.3;
-        directionref.current.yvel *= 0.3;
+        directionref.current.xvel *= 0.2;
+        directionref.current.yvel *= 0.2;
     });
 
     return (
@@ -45,17 +65,17 @@ export default function Cube({ x, y, z, size }) {
             ref={ref}
             onPointerOver={() => {
                 colorref.current = "red";
-                ref.current.scale.set(0.5, 0.5, 0.5);
+                jarref.current += 0.7;
             }}
             onPointerLeave={() => {
-                colorref.current = "orange";
+                colorref.current = "#ffc600";
             }}
         >
             <boxGeometry args={[size, size, size]}></boxGeometry>
-            <meshStandardMaterial
+            <meshBasicMaterial
                 color={colorref.current}
-                wireframe={false}
-            ></meshStandardMaterial>
+                wireframe={true}
+            ></meshBasicMaterial>
         </mesh>
     );
 }

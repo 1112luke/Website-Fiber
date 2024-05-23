@@ -1,6 +1,11 @@
 import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { PerspectiveCamera, ScrollControls, Scroll } from "@react-three/drei";
+import {
+    PerspectiveCamera,
+    ScrollControls,
+    Scroll,
+    Html,
+} from "@react-three/drei";
 import "./App.css";
 import { Color, Light } from "three";
 import Cube from "./cube";
@@ -34,32 +39,38 @@ export default function App() {
     }
 
     return (
-        <Canvas>
-            <color attach="background" args={/*["#75a6d1"]*/ ["black"]}></color>
+        <>
+            <Canvas>
+                <color attach="background" args={["#193549"]}></color>
 
-            <PerspectiveCamera
-                makeDefault
-                position={[0, 0, 0]}
-            ></PerspectiveCamera>
+                <PerspectiveCamera
+                    makeDefault
+                    position={[0, 0, 0]}
+                ></PerspectiveCamera>
 
-            <Lightsi position={[0, 0, 0]}></Lightsi>
+                <Lightsi position={[0, 0, 0]}></Lightsi>
 
-            <ScrollControls damping={0.1} pages={1} distance={10}>
-                <Scroll render={render}>
-                    {cubesref.current.map((cube) => {
-                        return (
-                            <Cube
-                                x={cube.x}
-                                y={cube.y}
-                                z={cube.z}
-                                size={cube.size}
-                                key={cube.key}
-                            ></Cube>
-                        );
-                    })}
-                    <Controlcam></Controlcam>
-                </Scroll>
-            </ScrollControls>
-        </Canvas>
+                <ScrollControls damping={0.15} pages={1} distance={10}>
+                    <Scroll render={render}>
+                        {cubesref.current.map((cube) => {
+                            return (
+                                <Cube
+                                    x={cube.x}
+                                    y={cube.y}
+                                    z={cube.z}
+                                    size={cube.size}
+                                    key={cube.key}
+                                    id={cube.key}
+                                ></Cube>
+                            );
+                        })}
+                        <Controlcam></Controlcam>
+                        <Html>
+                            <div className="navigation"></div>
+                        </Html>
+                    </Scroll>
+                </ScrollControls>
+            </Canvas>
+        </>
     );
 }
