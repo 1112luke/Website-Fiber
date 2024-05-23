@@ -11,6 +11,7 @@ import { Color, Light } from "three";
 import Cube from "./cube";
 import Controlcam from "./Controlcam";
 import Lightsi from "./lightsi";
+import { Model } from "./Bat";
 
 export default function App() {
     var cubesref = useRef(new Array());
@@ -50,6 +51,8 @@ export default function App() {
 
                 <Lightsi position={[0, 0, 0]}></Lightsi>
 
+                <ambientLight intensity={2}></ambientLight>
+
                 <ScrollControls damping={0.15} pages={1} distance={10}>
                     <Scroll render={render}>
                         {cubesref.current.map((cube) => {
@@ -65,6 +68,7 @@ export default function App() {
                             );
                         })}
                         <Controlcam></Controlcam>
+                        <Model></Model>
                         <Html>
                             <div className="navigation"></div>
                         </Html>
