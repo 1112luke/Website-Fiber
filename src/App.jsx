@@ -2,24 +2,20 @@ import { useRef, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { PerspectiveCamera, ScrollControls, Scroll } from "@react-three/drei";
 import "./App.css";
-import { Light } from "three";
+import { Color, Light } from "three";
 import Cube from "./cube";
 import Controlcam from "./Controlcam";
+import Lightsi from "./lightsi";
 
 export default function App() {
-    //camera position not propeerly initialized, and need to figure out how to move with scroll in controlcam
-
-    var [cameraPosition, setCameraPosition] = useState([0, 0, 0]);
-
     var cubesref = useRef(new Array());
+    var [render, setrender] = useState(false);
 
     useEffect(() => {
-        //control camera
-        window.addEventListener("mousemove", (e) => {
-            setCameraPosition(calculateCameraPosition(e));
-        });
-
         createCubes();
+
+        //necessary because page was not rendering
+        setrender(true);
     }, []);
 
     function createCubes() {
@@ -33,31 +29,23 @@ export default function App() {
                 size: Math.random() * 0.5 + 0.1,
                 key: i,
             });
-            console.log("pushed");
+            console.log("created");
         }
-    }
-
-    function calculateCameraPosition(e) {
-        var x = (e.clientX / window.innerWidth) * 2 - 1;
-        var y = (e.clientY / window.innerHeight) * 2 - 1;
-        var z = 10;
-        return [x, -y, z];
     }
 
     return (
         <Canvas>
+            <color attach="background" args={/*["#75a6d1"]*/ ["black"]}></color>
+
             <PerspectiveCamera
                 makeDefault
-                position={cameraPosition}
+                position={[0, 0, 0]}
             ></PerspectiveCamera>
 
-            <directionalLight
-                position={[0, 0, 5]}
-                intensity={2}
-            ></directionalLight>
+            <Lightsi position={[0, 0, 0]}></Lightsi>
 
             <ScrollControls damping={0.1} pages={1} distance={10}>
-                <Scroll>
+                <Scroll render={render}>
                     {cubesref.current.map((cube) => {
                         return (
                             <Cube
