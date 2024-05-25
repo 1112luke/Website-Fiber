@@ -24,16 +24,16 @@ export default function Controlcam() {
 
     var paths = [
         {
-            flex: 10,
+            flex: 1,
             x: 0,
             y: 0,
-            z: 50,
+            z: -50,
             xr: 0,
             yr: 0,
             zr: 0,
         },
         {
-            flex: 20,
+            flex: 3,
             x: 0,
             y: 0,
             z: 0,
@@ -52,7 +52,7 @@ export default function Controlcam() {
 
         //get value 0-1 for current path progress
 
-        //get current division number
+        //get current division number based on scroll offset
         var count = Math.floor(ScrollY.offset / (1 / divisions + 0.0001));
         //find what path that number falls on
         var path = 0;
@@ -76,13 +76,6 @@ export default function Controlcam() {
             pastdivisions / divisions,
             paths[currentPathRef.current].flex / divisions
         );
-        console.log("ScrollY: " + ScrollY.offset);
-        console.log(
-            "range: " + pastdivisions / divisions,
-            (pastdivisions + paths[currentPathRef.current].flex) / divisions
-        );
-        console.log("current Progress: " + currentpathprogress);
-        //ScrollY.offset * paths.length - currentPathRef.current;
 
         //get previouspath
         if (currentPathRef.current == 0) {

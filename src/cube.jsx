@@ -26,9 +26,9 @@ export default function Cube({ x, y, z, size, id }) {
 
         //get current scrolloffset
         var scrolloffy =
-            scrollY.offset * 50 * seedref.current + seedref.current * 50;
+            scrollY.offset * 300 * seedref.current + seedref.current * 50;
         var scrolloffx =
-            scrollY.offset * 50 * seedref.current + seedref.current * 50;
+            scrollY.offset * 300 * seedref.current + seedref.current * 50;
 
         //increment rotationref
         rotationref.current.x += deltax;
