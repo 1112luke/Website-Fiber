@@ -9,7 +9,7 @@ import {
 import "./App.css";
 import { Color, Light } from "three";
 import Cube from "./cube";
-import Controlcam from "./Controlcam";
+import Controlcam from "./camera/Controlcam";
 import Lightsi from "./lightsi";
 import { Model } from "./Bat";
 import Webplane from "./Webplane";
