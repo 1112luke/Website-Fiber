@@ -14,3 +14,9 @@ Canvas{
     background-color: red;
 
 }
+
+.testBlock{
+    width: 20%;
+    height: 20%;
+    color: "red";
+}

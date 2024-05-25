@@ -12,6 +12,7 @@ import Cube from "./cube";
 import Controlcam from "./Controlcam";
 import Lightsi from "./lightsi";
 import { Model } from "./Bat";
+import Webplane from "./Webplane";
 
 export default function App() {
     var cubesref = useRef(new Array());
@@ -69,6 +70,7 @@ export default function App() {
                         })}
                         <Controlcam></Controlcam>
                         <Model></Model>
+                        <Webplane></Webplane>
                         <Html>
                             <div className="navigation"></div>
                         </Html>
