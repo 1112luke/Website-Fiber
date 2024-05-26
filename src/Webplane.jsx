@@ -12,10 +12,16 @@ export default function Webplane() {
     });
 
     return (
-        <mesh position={[0, 0, -20]} ref={meshref}>
+        <mesh ref={meshref} position={[0, 0, -20]}>
             <planeGeometry width={20} height={20}></planeGeometry>
-            <Html transform occlude position={[0, 0, 1]}>
-                <div className="testblock"> hi </div>
+            <Html
+                style={{ width: 50, height: 50, background: "red" }}
+                transform
+                occlude
+            >
+                <h1 className="testblock">
+                    this text should follow the plane{" "}
+                </h1>
             </Html>
         </mesh>
     );

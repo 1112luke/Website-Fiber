@@ -1,6 +1,7 @@
 import { useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRef, useEffect } from "react";
+import { Html } from "@react-three/drei";
 
 export default function Cube({ x, y, z, size, id }) {
     var ref = useRef();

@@ -27,13 +27,13 @@ export default function Controlcam() {
             flex: 1,
             x: 0,
             y: 0,
-            z: -50,
+            z: -20,
             xr: 0,
             yr: 0,
             zr: 0,
         },
         {
-            flex: 3,
+            flex: 10,
             x: 0,
             y: 0,
             z: 0,
@@ -91,7 +91,7 @@ export default function Controlcam() {
             posx.current;
         state.camera.position.y =
             previouspath.y +
-            currentpathprogress * (currentpath.y - previouspath.y) +
+            currentpathprogress * (currentpath.y - previouspath.y) -
             posy.current;
         state.camera.position.z =
             previouspath.z +
