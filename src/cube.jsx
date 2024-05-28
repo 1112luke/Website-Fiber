@@ -5,7 +5,7 @@ import { Html } from "@react-three/drei";
 
 export default function Cube({ x, y, z, size, id }) {
     var ref = useRef();
-    var colorref = useRef("orange");
+    var colorref = useRef("#ffc600");
     var seedref = useRef(Math.random() - 0.5);
     var jarref = useRef(0);
     var scrollY = useScroll();

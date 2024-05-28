@@ -1,28 +1,39 @@
 import { Html } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import "./App.css";
 
 export default function Webplane() {
     var meshref = useRef();
 
+    var { gl } = useThree();
+
     useFrame(() => {
-        meshref.current.rotation.x += 0.01;
-        meshref.current.rotation.y += 0.001;
+        meshref.current.rotation.x += 0.0;
+        meshref.current.rotation.y += 0.0;
     });
 
     return (
-        <mesh ref={meshref} position={[0, 0, -20]}>
-            <planeGeometry width={20} height={20}></planeGeometry>
+        <group ref={meshref} position={[0, 0, -20]}>
+            <mesh>
+                <planeGeometry width={20} height={20}></planeGeometry>
+            </mesh>
             <Html
-                style={{ width: 50, height: 50, background: "red" }}
+                style={{ width: "1920px", height: "1080px", background: "red" }}
+                position={[0, 0, 0]}
+                distanceFactor={0.2}
+                portal={{ current: gl.domElement.parentNode }}
                 transform
-                occlude
             >
-                <h1 className="testblock">
-                    this text should follow the plane{" "}
-                </h1>
+                <iframe
+                    style={{
+                        width: "1920px",
+                        height: "1080px",
+                        backgroundColor: "white",
+                    }}
+                    src="https://www.lukescholler.com/"
+                ></iframe>
             </Html>
-        </mesh>
+        </group>
     );
 }

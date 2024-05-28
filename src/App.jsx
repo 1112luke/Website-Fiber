@@ -5,6 +5,8 @@ import {
     ScrollControls,
     Scroll,
     Html,
+    Stars,
+    Text3D,
 } from "@react-three/drei";
 import "./App.css";
 import { Color, Light } from "three";
@@ -13,10 +15,12 @@ import Controlcam from "./camera/Controlcam";
 import Lightsi from "./lightsi";
 import { Model } from "./Bat";
 import Webplane from "./Webplane";
+import Homescreen from "./Homescreen";
 
 export default function App() {
     var cubesref = useRef(new Array());
     var [render, setrender] = useState(false);
+    var radiusref = useRef(1500);
 
     useEffect(() => {
         createCubes();
@@ -25,15 +29,28 @@ export default function App() {
         setrender(true);
     }, []);
 
+    function getPosition() {
+        var theta = Math.random() * (2 * Math.PI);
+        var phi = Math.random() * Math.PI;
+        var rho = Math.random() * radiusref.current;
+
+        return {
+            x: rho * Math.sin(theta) * Math.cos(phi),
+            y: rho * Math.sin(theta) * Math.sin(phi),
+            z: rho * Math.cos(theta),
+        };
+    }
+
     function createCubes() {
         //create many cubes
-        var numcubes = 1000;
+        var numcubes = 5000;
         for (var i = 0; i < numcubes; i++) {
+            var newpos = getPosition();
             cubesref.current.push({
-                x: Math.random() * 20 - 10,
-                y: Math.random() * 20 - 10,
-                z: Math.random() * 40,
-                size: Math.random() * 0.5 + 0.1,
+                x: newpos.x,
+                y: newpos.y,
+                z: newpos.z,
+                size: Math.random() * 2 + 0.1,
                 key: i,
             });
             console.log("created");
@@ -48,13 +65,14 @@ export default function App() {
                 <PerspectiveCamera
                     makeDefault
                     position={[0, 0, 0]}
+                    far={3000}
                 ></PerspectiveCamera>
 
                 <Lightsi position={[0, 0, 0]}></Lightsi>
 
                 <ambientLight intensity={2}></ambientLight>
 
-                <ScrollControls damping={0.15} pages={1} distance={10}>
+                <ScrollControls damping={0.15} pages={2} distance={20}>
                     <Scroll render={render}>
                         {cubesref.current.map((cube) => {
                             return (
@@ -70,12 +88,19 @@ export default function App() {
                         })}
                         <Controlcam></Controlcam>
                         <Model></Model>
-                        <Webplane></Webplane>
-                        <Html>
-                            <div className="navigation"></div>
-                        </Html>
+
+                        <Text3D
+                            font="/assets/font.json"
+                            position={[20, 10, 1350]}
+                            rotation={[1, 0, 0.2]}
+                            scale={[5, 5, 5]}
+                        >
+                            About Me
+                            <meshBasicMaterial color="#ffc600"></meshBasicMaterial>
+                        </Text3D>
                     </Scroll>
                 </ScrollControls>
+                <Homescreen></Homescreen>
             </Canvas>
         </>
     );

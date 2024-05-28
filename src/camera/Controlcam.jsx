@@ -6,6 +6,14 @@ export default function Controlcam() {
     var posx = useRef();
     var posy = useRef();
     var currentPathRef = useRef(0);
+    var startingpos = useRef({
+        x: -500,
+        y: -200,
+        z: 2000,
+        xr: 0,
+        yr: 0,
+        zr: 0,
+    });
 
     var yes = useThree();
 
@@ -14,12 +22,16 @@ export default function Controlcam() {
     useEffect(() => {
         //control camera
         window.addEventListener("mousemove", (e) => {
-            posx.current = (e.clientX / window.innerWidth) * 2 - 1;
-            posy.current = (e.clientY / window.innerHeight) * 2 - 1;
+            posx.current = (e.clientX / window.innerWidth) * 8 - 4;
+            posy.current = (e.clientY / window.innerHeight) * 8 - 4;
         });
-        yes.camera.position.x = 0;
-        yes.camera.position.y = 0;
-        yes.camera.position.z = 0;
+        //initialize camera
+        yes.camera.position.x = startingpos.current.x;
+        yes.camera.position.y = startingpos.current.x;
+        yes.camera.position.z = startingpos.current.x;
+        yes.camera.rotation.x = startingpos.current.xr;
+        yes.camera.rotation.y = startingpos.current.yr;
+        yes.camera.rotation.z = startingpos.current.zr;
     }, []);
 
     var paths = [
@@ -27,13 +39,15 @@ export default function Controlcam() {
             flex: 1,
             x: 0,
             y: 0,
-            z: -20,
-            xr: 0,
-            yr: 0,
+            z: 1400,
+            xr: 0.2,
+            yr: -0.7,
             zr: 0,
         },
+        //about me
+        //make it go through the 0 in about me and have a more miniature world.
         {
-            flex: 10,
+            flex: 20,
             x: 0,
             y: 0,
             z: 0,
@@ -79,7 +93,7 @@ export default function Controlcam() {
 
         //get previouspath
         if (currentPathRef.current == 0) {
-            var previouspath = { x: 0, y: 0, z: 0, xr: 0, yr: 0, zr: 0 };
+            var previouspath = startingpos.current;
         } else {
             var previouspath = paths[currentPathRef.current - 1];
         }

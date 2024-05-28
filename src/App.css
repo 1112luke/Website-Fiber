@@ -1,18 +1,31 @@
-*{
-    width:100%;
-    height:100%;
-    margin:0;
-    padding:0;
-    overflow:auto;
+
+
+html{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
-html
+body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+#root{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: "Reddit Mono", monospace;
+}
 
 Canvas{
-    position:absolute;
-    top:0;
-    left:0;
-    margin:0;
-    padding:0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .navigation{
@@ -21,5 +34,35 @@ Canvas{
     opacity: 0;
 }
 
-.testBlock{
+#Homepage{
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.navigation{
+    flex: 1;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.section{
+    flex: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    font-size: 15vw;
+}
+
+.footer{
+    background-color: orange;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
