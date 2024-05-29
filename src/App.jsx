@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import {
     PerspectiveCamera,
@@ -7,15 +7,17 @@ import {
     Html,
     Stars,
     Text3D,
+    Loader,
 } from "@react-three/drei";
 import "./App.css";
 import { Color, Light } from "three";
 import Cube from "./cube";
 import Controlcam from "./camera/Controlcam";
-import Lightsi from "./lightsi";
 import { Model } from "./Bat";
-import Webplane from "./Webplane";
+import { lazy } from "react";
 import Homescreen from "./Homescreen";
+import Projects from "./Sections/Projects";
+import Webplane from "./Webplane";
 
 export default function App() {
     var cubesref = useRef(new Array());
@@ -24,9 +26,6 @@ export default function App() {
 
     useEffect(() => {
         createCubes();
-
-        //necessary because page was not rendering
-        setrender(true);
     }, []);
 
     function getPosition() {
@@ -55,6 +54,7 @@ export default function App() {
             });
             console.log("created");
         }
+        setrender(true);
     }
 
     return (
@@ -68,40 +68,36 @@ export default function App() {
                     far={3000}
                 ></PerspectiveCamera>
 
-                <Lightsi position={[0, 0, 0]}></Lightsi>
-
                 <ambientLight intensity={2}></ambientLight>
 
-                <ScrollControls damping={0.15} pages={2} distance={20}>
-                    <Scroll render={render}>
-                        {cubesref.current.map((cube) => {
-                            return (
-                                <Cube
-                                    x={cube.x}
-                                    y={cube.y}
-                                    z={cube.z}
-                                    size={cube.size}
-                                    key={cube.key}
-                                    id={cube.key}
-                                ></Cube>
-                            );
-                        })}
+                <Suspense fallback={null}>
+                    <ScrollControls damping={0.15} pages={2} distance={20}>
                         <Controlcam></Controlcam>
-                        <Model></Model>
+                        <Scroll>
+                            {cubesref.current.map((cube) => {
+                                return (
+                                    <Cube
+                                        x={cube.x}
+                                        y={cube.y}
+                                        z={cube.z}
+                                        size={cube.size}
+                                        key={cube.key}
+                                        id={cube.key}
+                                    ></Cube>
+                                );
+                            })}
 
-                        <Text3D
-                            font="/assets/font.json"
-                            position={[20, 10, 1350]}
-                            rotation={[1, 0, 0.2]}
-                            scale={[5, 5, 5]}
-                        >
-                            About Me
-                            <meshBasicMaterial color="#ffc600"></meshBasicMaterial>
-                        </Text3D>
-                    </Scroll>
-                </ScrollControls>
-                <Homescreen></Homescreen>
+                            <Model></Model>
+                            <Webplane></Webplane>
+
+                            <Projects></Projects>
+                            <Homescreen></Homescreen>
+                        </Scroll>
+                    </ScrollControls>
+                </Suspense>
             </Canvas>
+
+            <Loader></Loader>
         </>
     );
 }

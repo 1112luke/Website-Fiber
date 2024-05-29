@@ -5,7 +5,9 @@ import { useEffect, useRef } from "react";
 export default function Controlcam() {
     var posx = useRef();
     var posy = useRef();
+    var countref = useRef(0);
     var currentPathRef = useRef(0);
+    var translateamount = useRef();
     var startingpos = useRef({
         x: -500,
         y: -200,
@@ -13,6 +15,7 @@ export default function Controlcam() {
         xr: 0,
         yr: 0,
         zr: 0,
+        ta: 8,
     });
 
     var yes = useThree();
@@ -22,13 +25,19 @@ export default function Controlcam() {
     useEffect(() => {
         //control camera
         window.addEventListener("mousemove", (e) => {
-            posx.current = (e.clientX / window.innerWidth) * 8 - 4;
-            posy.current = (e.clientY / window.innerHeight) * 8 - 4;
+            if (countref.current > 10) {
+                posx.current =
+                    (e.clientX / window.innerWidth) * translateamount.current -
+                    translateamount.current / 2;
+                posy.current =
+                    (e.clientY / window.innerHeight) * translateamount.current -
+                    translateamount.current / 2;
+            }
         });
         //initialize camera
         yes.camera.position.x = startingpos.current.x;
-        yes.camera.position.y = startingpos.current.x;
-        yes.camera.position.z = startingpos.current.x;
+        yes.camera.position.y = startingpos.current.y;
+        yes.camera.position.z = startingpos.current.z;
         yes.camera.rotation.x = startingpos.current.xr;
         yes.camera.rotation.y = startingpos.current.yr;
         yes.camera.rotation.z = startingpos.current.zr;
@@ -43,21 +52,42 @@ export default function Controlcam() {
             xr: 0.2,
             yr: -0.7,
             zr: 0,
+            ta: 8,
         },
         //about me
         //make it go through the 0 in about me and have a more miniature world.
         {
+            flex: 5,
+            x: 30,
+            y: 11,
+            z: 1353,
+            xr: 0.2,
+            yr: -0.5,
+            zr: 0,
+            ta: 0.2,
+        },
+        {
             flex: 20,
             x: 0,
             y: 0,
-            z: 0,
+            z: -20,
             xr: 0,
             yr: 0,
             zr: 0,
+            ta: 8,
         },
     ];
 
     useFrame((state, delta) => {
+        //count up -- this is because of weird loading of html
+        if (countref.current < 100) {
+            countref.current++;
+        }
+        if (countref.current > 10 && countref.current < 15) {
+            posx.current = 0;
+            posy.current = 0;
+        }
+
         //get divisions of time
         var divisions = 0;
         for (var i = 0; i < paths.length; i++) {
@@ -98,11 +128,16 @@ export default function Controlcam() {
             var previouspath = paths[currentPathRef.current - 1];
         }
 
+        //set translate amount
+        translateamount.current = currentpath.ta;
+
         //set position based on path
+
         state.camera.position.x =
             previouspath.x +
             currentpathprogress * (currentpath.x - previouspath.x) +
             posx.current;
+        i;
         state.camera.position.y =
             previouspath.y +
             currentpathprogress * (currentpath.y - previouspath.y) -
