@@ -55,15 +55,36 @@ export default function Controlcam() {
             ta: 8,
         },
         //about me
-        //make it go through the 0 in about me and have a more miniature world.
         {
             flex: 5,
-            x: 30,
-            y: 11,
-            z: 1353,
+            x: 28,
+            y: 10,
+            z: 1357,
             xr: 0.2,
             yr: -0.5,
             zr: 0,
+            ta: 0.2,
+        },
+        //in 0
+        {
+            flex: 2,
+            x: 29,
+            y: 10.6,
+            z: 1356,
+            xr: -0.1,
+            yr: 1,
+            zr: 0.42,
+            ta: 0.2,
+        },
+        //end of timeliine scroll
+        {
+            flex: 3,
+            x: 34,
+            y: 14.3,
+            z: 1348,
+            xr: -0.1,
+            yr: 1,
+            zr: 0.44,
             ta: 0.2,
         },
         {
@@ -79,6 +100,11 @@ export default function Controlcam() {
     ];
 
     useFrame((state, delta) => {
+        //console.log
+        /* console.log("x: " + state.camera.position.x);
+        console.log("y: " + state.camera.position.y);
+        console.log("z: " + state.camera.position.z);*/
+
         //count up -- this is because of weird loading of html
         if (countref.current < 100) {
             countref.current++;
