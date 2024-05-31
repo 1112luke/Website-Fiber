@@ -6,14 +6,18 @@ export default function Controlcam() {
     var posx = useRef();
     var posy = useRef();
     var countref = useRef(0);
+    var prevpathref = useRef(0);
     var currentPathRef = useRef(0);
     var translateamount = useRef();
+    var mouseevent = useRef();
+    var loggingcam = false;
+    var logoffset = false;
     var startingpos = useRef({
-        x: -500,
-        y: -200,
-        z: 2000,
+        x: -65,
+        y: -45,
+        z: 500,
         xr: 0,
-        yr: 0,
+        yr: 0.3,
         zr: 0,
         ta: 8,
     });
@@ -26,14 +30,11 @@ export default function Controlcam() {
         //control camera
         window.addEventListener("mousemove", (e) => {
             if (countref.current > 10) {
-                posx.current =
-                    (e.clientX / window.innerWidth) * translateamount.current -
-                    translateamount.current / 2;
-                posy.current =
-                    (e.clientY / window.innerHeight) * translateamount.current -
-                    translateamount.current / 2;
+                mouseevent.current = e;
+                mouseoffset(mouseevent.current);
             }
         });
+
         //initialize camera
         yes.camera.position.x = startingpos.current.x;
         yes.camera.position.y = startingpos.current.y;
@@ -43,49 +44,71 @@ export default function Controlcam() {
         yes.camera.rotation.z = startingpos.current.zr;
     }, []);
 
+    function mouseoffset(e) {
+        if (e) {
+            posx.current =
+                (e.clientX / window.innerWidth) * translateamount.current -
+                translateamount.current / 2;
+            posy.current =
+                (e.clientY / window.innerHeight) * translateamount.current -
+                translateamount.current / 2;
+        }
+    }
+
     var paths = [
         {
-            flex: 1,
-            x: 0,
-            y: 0,
-            z: 1400,
+            flex: 2,
+            x: 15,
+            y: -23,
+            z: 346,
             xr: 0.2,
             yr: -0.7,
             zr: 0,
-            ta: 8,
+            ta: 5,
         },
-        //about me
+        //slow move towards about
         {
-            flex: 5,
-            x: 28,
-            y: 10,
-            z: 1357,
-            xr: 0.2,
-            yr: -0.5,
+            flex: 3,
+            x: 19,
+            y: -21,
+            z: 340,
+            xr: 0.3,
+            yr: -0.7,
             zr: 0,
-            ta: 0.2,
+            ta: 0,
+        },
+        //rotate the rest of the way there
+        {
+            flex: 4,
+            x: 25.6,
+            y: -20,
+            z: 334,
+            xr: 0.3,
+            yr: -0.7,
+            zr: -Math.PI / 2,
+            ta: 0,
         },
         //in 0
         {
-            flex: 2,
-            x: 29,
-            y: 10.6,
-            z: 1356,
-            xr: -0.1,
-            yr: 1,
-            zr: 0.42,
-            ta: 0.2,
+            flex: 4,
+            x: 25.6,
+            y: -20,
+            z: 334,
+            xr: 0.3,
+            yr: -0.7,
+            zr: -Math.PI / 2,
+            ta: 0,
         },
         //end of timeliine scroll
         {
-            flex: 3,
-            x: 34,
-            y: 14.3,
-            z: 1348,
-            xr: -0.1,
-            yr: 1,
-            zr: 0.44,
-            ta: 0.2,
+            flex: 2,
+            x: 35,
+            y: -17.94,
+            z: 326,
+            xr: 0.2,
+            yr: 0.97,
+            zr: 0.165,
+            ta: 0,
         },
         {
             flex: 20,
@@ -100,10 +123,17 @@ export default function Controlcam() {
     ];
 
     useFrame((state, delta) => {
-        //console.log
-        /* console.log("x: " + state.camera.position.x);
-        console.log("y: " + state.camera.position.y);
-        console.log("z: " + state.camera.position.z);*/
+        //log cam position
+        if (loggingcam) {
+            console.log("x: " + state.camera.position.x);
+            console.log("y: " + state.camera.position.y);
+            console.log("z: " + state.camera.position.z);
+        }
+
+        //log scrolloffset
+        if (logoffset) {
+            console.log(ScrollY.offset);
+        }
 
         //count up -- this is because of weird loading of html
         if (countref.current < 100) {
@@ -156,6 +186,12 @@ export default function Controlcam() {
 
         //set translate amount
         translateamount.current = currentpath.ta;
+
+        //check for change in path to account for translate amount
+        if (currentPathRef.current != prevpathref.current) {
+            mouseoffset(mouseevent.current);
+            prevpathref.current = currentPathRef.current;
+        }
 
         //set position based on path
 

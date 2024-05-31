@@ -8,6 +8,8 @@ import {
     Stars,
     Text3D,
     Loader,
+    FirstPersonControls,
+    PointerLockControls,
 } from "@react-three/drei";
 import "./App.css";
 import { Color, Light } from "three";
@@ -15,19 +17,28 @@ import Cube from "./cube";
 import Controlcam from "./camera/Controlcam";
 import { Model } from "./Bat";
 import { lazy } from "react";
-import Homescreen from "./Homescreen";
-import Projects from "./Sections/Projects";
+import Homescreen from "./Screenhtml/Homescreen";
+import Projects from "./Sections/projects/Projects";
 import Webplane from "./Webplane";
+import RotationControls from "./camera/RotationControls";
+import Scrollindicator from "./Screenhtml/Scollindicator";
+import Totop from "./Screenhtml/Totop";
+import About from "./Sections/about/About";
 
 export default function App() {
     var cubesref = useRef(new Array());
     var [render, setrender] = useState(false);
-    var radiusref = useRef(1500);
+    var radiusref = useRef(300);
+
+    var fp = false;
+    var rc = false;
+    var dc = true;
 
     useEffect(() => {
         createCubes();
     }, []);
 
+    //gets a position in spherical coordinates for spawning cubes
     function getPosition() {
         var theta = Math.random() * (2 * Math.PI);
         var phi = Math.random() * Math.PI;
@@ -42,7 +53,7 @@ export default function App() {
 
     function createCubes() {
         //create many cubes
-        var numcubes = 5000;
+        var numcubes = 500;
         for (var i = 0; i < numcubes; i++) {
             var newpos = getPosition();
             cubesref.current.push({
@@ -61,18 +72,30 @@ export default function App() {
         <>
             <Canvas>
                 <color attach="background" args={["#193549"]}></color>
-
                 <PerspectiveCamera
                     makeDefault
                     position={[0, 0, 0]}
                     far={3000}
                 ></PerspectiveCamera>
+                <ambientLight intensity={1}></ambientLight>
+                <directionalLight
+                    intensity={1.5}
+                    position={[0, 0, 2200]}
+                ></directionalLight>
 
-                <ambientLight intensity={2}></ambientLight>
+                {fp && (
+                    <FirstPersonControls
+                        activeLook={true}
+                        lookSpeed={0.1}
+                        movementSpeed={7}
+                    ></FirstPersonControls>
+                )}
+
+                {rc && <RotationControls></RotationControls>}
 
                 <Suspense fallback={null}>
                     <ScrollControls damping={0.15} pages={2} distance={20}>
-                        <Controlcam></Controlcam>
+                        {dc && <Controlcam></Controlcam>}
                         <Scroll>
                             {cubesref.current.map((cube) => {
                                 return (
@@ -88,11 +111,12 @@ export default function App() {
                             })}
 
                             <Model></Model>
-                            <Webplane></Webplane>
 
-                            <Projects></Projects>
+                            <About></About>
                             <Homescreen></Homescreen>
                         </Scroll>
+                        <Scrollindicator></Scrollindicator>
+                        <Totop></Totop>
                     </ScrollControls>
                 </Suspense>
             </Canvas>

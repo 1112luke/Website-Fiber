@@ -1,7 +1,8 @@
-import { Html } from "@react-three/drei";
+import { Html, useScroll } from "@react-three/drei";
 import { FaArrowDown } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
+import Button from "./Button";
 
 export default function Homescreen() {
     var [windowsize, setwindowsize] = useState([
@@ -16,6 +17,8 @@ export default function Homescreen() {
         });
     }, []);
 
+    var scrollDat = useScroll();
+
     return (
         <Html>
             <div
@@ -25,7 +28,30 @@ export default function Homescreen() {
                 }}
                 id="Homepage"
             >
-                <div className="navigation"></div>
+                <div className="navigation">
+                    <ul>
+                        <li>
+                            <Button
+                                text="about"
+                                scrollamount={1000}
+                                scrollDat={scrollDat}
+                            ></Button>
+                        </li>
+                        <li>
+                            <Button
+                                text="about"
+                                scrollamount={1000}
+                                scrollDat={scrollDat}
+                            ></Button>
+                        </li>
+                        <li>
+                            <Button></Button>
+                        </li>
+                        <li>
+                            <Button></Button>
+                        </li>
+                    </ul>
+                </div>
                 <div className="section">
                     <div style={{ color: "black" }}>Luke Scholler</div>
                 </div>

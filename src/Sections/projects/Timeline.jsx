@@ -1,6 +1,6 @@
 import { Html } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
-import Webplane from "./Webplane";
+import Webplane from "../../Webplane";
 
 export default function Timeline({ position, rotation }) {
     const labels = ["2004", "2019", "2022", "2023", "2024", "working on"];
@@ -19,6 +19,7 @@ export default function Timeline({ position, rotation }) {
     for (var i = 0; i < total; i++) {
         ticks.push(
             <mesh
+                key={i}
                 rotation={[Math.PI / 2, 0, 0]}
                 position={[0, start + (i * width) / total, 0]}
             >
@@ -34,6 +35,7 @@ export default function Timeline({ position, rotation }) {
             //tick
 
             <mesh
+                key={i}
                 rotation={[Math.PI / 2, 0, 0]}
                 position={[0, start + width - (i * width) / labels.length, 0]}
             >

@@ -3,37 +3,44 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import "./App.css";
 
-export default function Webplane() {
+export default function Webplane({
+    width,
+    height,
+    src,
+    distanceFactor,
+    inner,
+}) {
     var meshref = useRef();
 
     var { gl } = useThree();
 
-    useFrame(() => {
-        meshref.current.rotation.x += 0.0;
-        meshref.current.rotation.y += 0.0;
-    });
-
     return (
-        <group ref={meshref} position={[0, 0, -20]}>
-            <mesh>
-                <planeGeometry width={20} height={20}></planeGeometry>
-            </mesh>
-            <Html
-                style={{ width: "1920px", height: "1080px", background: "red" }}
-                position={[0, 0, 0]}
-                distanceFactor={0.2}
-                portal={{ current: gl.domElement.parentNode }}
-                transform
-            >
+        <Html
+            style={{
+                width: `${width}px`,
+                height: `${height}px`,
+            }}
+            position={[0, 0, 0]}
+            distanceFactor={distanceFactor ? distanceFactor : 0.2}
+            portal={{ current: gl.domElement.parentNode }}
+            transform
+            occlude
+        >
+            {src ? (
                 <iframe
                     style={{
-                        width: "1920px",
-                        height: "1080px",
+                        width: `100%`,
+                        height: `100%`,
                         backgroundColor: "white",
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
                     }}
-                    src="https://www.lukescholler.com/"
+                    src={src}
                 ></iframe>
-            </Html>
-        </group>
+            ) : (
+                inner
+            )}
+        </Html>
     );
 }
