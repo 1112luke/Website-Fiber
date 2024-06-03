@@ -13,8 +13,20 @@ export default function Aboutmepage() {
                 alignItems: "center",
             }}
         >
-            <div style={{ width: "95%", height: "95%" }}>
-                <h2>Hello world</h2>
+            <div
+                style={{
+                    width: "80%",
+                    height: "95%",
+                    display: "flex",
+                    fontSize: 90,
+                }}
+            >
+                {/*in this section, make links that display different faces of the cube!!!*/}
+                <div>
+                    I'm an Electrical Engineering major at the University of
+                    Notre Dame. I am passionate about code, baseball, guitar,
+                    and
+                </div>
             </div>
         </div>
     );

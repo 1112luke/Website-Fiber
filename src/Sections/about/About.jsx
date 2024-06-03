@@ -5,6 +5,7 @@ import Aboutmepage from "./Aboutmepage";
 import useHover from "../../hooks/useHover";
 import { useFrame } from "@react-three/fiber";
 import { useState } from "react";
+import useSlide from "../../hooks/useSlide";
 
 export default function About() {
     const inner = <Aboutmepage></Aboutmepage>;
@@ -12,34 +13,15 @@ export default function About() {
 
     var ScrollY = useScroll();
 
-    var [cubeslideposition, setcsp] = useState([9.8, 5, 2.5]);
+    var cubeslide = useSlide([9.8, 5, 2.5], [9.8, 3, 2.5], 0.24, 0.26);
 
-    //0.25 - o.26
-
-    useFrame(() => {
-        var cubeFinalPosition = [9.8, 3, 2.5];
-        var cubeStartingPosition = [9.8, 5, 2.5];
-
-        var newpos = [
-            cubeStartingPosition[0] +
-                (cubeFinalPosition[0] - cubeStartingPosition[0]) *
-                    ScrollY.range(0.24, 0.02),
-            cubeStartingPosition[1] +
-                (cubeFinalPosition[1] - cubeStartingPosition[1]) *
-                    ScrollY.range(0.24, 0.02),
-            cubeStartingPosition[2] +
-                (cubeFinalPosition[2] - cubeStartingPosition[2]) *
-                    ScrollY.range(0.24, 0.02),
-        ];
-
-        setcsp(newpos);
-    });
+    var frameslide = useSlide([10, -1, 2.5], [9.71, 2.12, 2.65], 0.24, 0.26);
 
     return (
         <group position={[20, -20, 325]} rotation={[0.4, -0.6, 0.1]}>
-            {ScrollY.visible(0.24, 0.26) ? (
+            {cubeslide.inview ? (
                 <group
-                    position={cubeslideposition}
+                    position={cubeslide.pos}
                     rotation={[0.3, -0.2, -1.6]}
                     scale={[0.3, 0.3, 0.3]}
                 >
@@ -48,21 +30,23 @@ export default function About() {
             ) : (
                 <></>
             )}
-
-            <group
-                position={[9.71, 2.12, 2.65]}
-                rotation={[-0.4, 0.0, -1.7]}
-                scale={[0.8, 0.8, 0.8]}
-            >
-                <group position={framehoverposition}>
-                    <Webplane
-                        width={1500}
-                        height={1920}
-                        inner={inner}
-                    ></Webplane>
+            {frameslide.inview ? (
+                <group
+                    position={frameslide.pos}
+                    rotation={[-0.4, 0.0, -1.7]}
+                    scale={[0.8, 0.8, 0.8]}
+                >
+                    <group position={framehoverposition}>
+                        <Webplane
+                            width={1500}
+                            height={1920}
+                            inner={inner}
+                        ></Webplane>
+                    </group>
                 </group>
-            </group>
-
+            ) : (
+                <></>
+            )}
             <Text3D
                 font="/assets/font.json"
                 scale={[3, 3, 3]}

@@ -39,6 +39,7 @@ export default function Totop() {
     }
 
     return (
+        //add arror that fades in with opacity at specified intervals in this file or in any other
         <Html>
             {vis && (
                 <motion.div
