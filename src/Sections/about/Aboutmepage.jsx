@@ -23,9 +23,12 @@ export default function Aboutmepage() {
             >
                 {/*in this section, make links that display different faces of the cube!!!*/}
                 <div>
-                    I'm an Electrical Engineering major at the University of
-                    Notre Dame. I am passionate about code, baseball, guitar,
-                    and
+                    I'm an{" "}
+                    <a className="hovertext" href="">
+                        Electrical Engineering
+                    </a>{" "}
+                    major at the University of Notre Dame. I am passionate about
+                    code, baseball, guitar, and
                 </div>
             </div>
         </div>

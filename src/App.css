@@ -36,6 +36,19 @@ Canvas{
     padding: 0;
 }
 
+a{
+    text-decoration: none;
+}
+
+.hovertext{
+    color: orange;
+    transition: color 0.3s;
+}
+
+.hovertext:hover{
+    color:yellow;
+}
+
 .navigation{
     height: 200px;
     background-color: red;
