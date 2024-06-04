@@ -1,4 +1,10 @@
-export default function Aboutmepage() {
+import { useRef } from "react";
+
+export default function Aboutmepage({ spin }) {
+    var scrollref = useRef();
+
+    //scrollref.scrollTo(100);
+
     return (
         <div
             style={{
@@ -15,20 +21,52 @@ export default function Aboutmepage() {
         >
             <div
                 style={{
-                    width: "80%",
+                    width: "90%",
                     height: "95%",
                     display: "flex",
-                    fontSize: 90,
+                    fontSize: 150,
+                    overflow: "scroll",
+                    scrollbarColor: "orange black",
                 }}
+                ref={scrollref}
             >
                 {/*in this section, make links that display different faces of the cube!!!*/}
                 <div>
                     I'm an{" "}
-                    <a className="hovertext" href="">
+                    <a
+                        className="hovertext"
+                        onMouseOver={() => {
+                            spin(1);
+                        }}
+                    >
                         Electrical Engineering
                     </a>{" "}
-                    major at the University of Notre Dame. I am passionate about
-                    code, baseball, guitar, and
+                    major at the{" "}
+                    <a
+                        className="hovertext"
+                        onMouseOver={() => {
+                            spin(0);
+                        }}
+                        onMouseLeave={() => {
+                            spin(7);
+                        }}
+                    >
+                        University of Notre Dame.
+                    </a>{" "}
+                    I am passionate about <a className="hovertext">code,</a>{" "}
+                    <a className="hovertext" href="">
+                        electronics,
+                    </a>{" "}
+                    <a className="hovertext" href="">
+                        baseball,
+                    </a>{" "}
+                    and{" "}
+                    <a className="hovertext" href="">
+                        guitar.
+                    </a>{" "}
+                    <br></br>
+                    <br></br>
+                    <div>Scroll to see some of my projects.</div>
                 </div>
             </div>
         </div>

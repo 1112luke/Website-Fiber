@@ -8,7 +8,9 @@ export default function Scrollindicator() {
     var ref = useRef();
 
     useFrame(() => {
-        ref.current.style.width = `${scrollY.offset * 100}%`;
+        if (ref.current) {
+            ref.current.style.width = `${scrollY.offset * 100}%`;
+        }
     });
 
     return (
