@@ -8,7 +8,7 @@ export default function Facecube({ img }) {
     var cuberef = useRef();
     var position = useHover(0.5, 0.1);
 
-    var images = ["nd.png", "EE.png"];
+    var images = ["nd.png", "EE.png", "code.jpg"];
 
     var imageels = [];
 
@@ -19,32 +19,32 @@ export default function Facecube({ img }) {
         switch (i) {
             case 0:
                 //front
-                pos = [0, 0, 0.51];
+                pos = [0, 0, 0.50001];
                 rot = [0, 0, 0];
                 break;
             case 1:
                 //back
-                pos = [0, 0, -0.51];
+                pos = [0, 0, -0.50001];
                 rot = [0, Math.PI, 0];
                 break;
             case 2:
                 //left
-                pos = [-0.51, 0, 0];
+                pos = [-0.50001, 0, 0];
                 rot = [0, -Math.PI / 2, 0];
                 break;
             case 3:
                 //right
-                pos = [0.51, 0, 0];
+                pos = [0.50001, 0, 0];
                 rot = [0, Math.PI / 2, 0];
                 break;
             case 4:
                 //bottom
-                pos = [0, -0.51, 0];
+                pos = [0, -0.50001, 0];
                 rot = [Math.PI / 2, 0, 0];
                 break;
             case 5:
                 //top
-                pos = [0, 0.51, 0];
+                pos = [0, 0.50001, 0];
                 rot = [-Math.PI / 2, 0, 0];
                 break;
         }
@@ -53,21 +53,25 @@ export default function Facecube({ img }) {
             <Html
                 style={{ width: "1080px", height: "1080px" }}
                 portal={{ current: gl.domElement.parentNode }}
-                distanceFactor={0.38}
+                distanceFactor={0.372}
                 position={pos}
                 rotation={rot}
                 key={i}
                 transform
                 occlude
             >
-                <img
-                    style={{
-                        width: "100%",
-                        height: "100%",
-                        fontSize: 300,
-                    }}
-                    src={`/assets/${images[img]}`}
-                ></img>
+                {img >= 0 && img <= 6 ? (
+                    <img
+                        style={{
+                            width: "100%",
+                            height: "100%",
+                            fontSize: 300,
+                        }}
+                        src={`/assets/${images[img]}`}
+                    ></img>
+                ) : (
+                    <></>
+                )}
             </Html>
         );
     }

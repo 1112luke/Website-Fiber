@@ -40,7 +40,7 @@ export default function Homescreen() {
                         <li>
                             <Button
                                 text="about"
-                                scrollamount={1000}
+                                scrollamount={9000}
                                 scrollDat={scrollDat}
                             ></Button>
                         </li>

@@ -17,6 +17,7 @@ export default function Aboutmepage({ spin }) {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                cursor: "default",
             }}
         >
             <div
@@ -38,6 +39,9 @@ export default function Aboutmepage({ spin }) {
                         onMouseOver={() => {
                             spin(1);
                         }}
+                        onMouseLeave={() => {
+                            spin(7);
+                        }}
                     >
                         Electrical Engineering
                     </a>{" "}
@@ -53,7 +57,18 @@ export default function Aboutmepage({ spin }) {
                     >
                         University of Notre Dame.
                     </a>{" "}
-                    I am passionate about <a className="hovertext">code,</a>{" "}
+                    I am passionate about{" "}
+                    <a
+                        className="hovertext"
+                        onMouseOver={() => {
+                            spin(2);
+                        }}
+                        onMouseLeave={() => {
+                            spin(7);
+                        }}
+                    >
+                        code,
+                    </a>{" "}
                     <a className="hovertext" href="">
                         electronics,
                     </a>{" "}
