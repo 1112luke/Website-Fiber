@@ -113,6 +113,7 @@ export default function App() {
                             <Model></Model>
 
                             <About></About>
+                            <Projects></Projects>
                             <Homescreen></Homescreen>
                         </Scroll>
                         <Scrollindicator></Scrollindicator>

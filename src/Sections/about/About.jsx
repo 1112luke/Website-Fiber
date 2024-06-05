@@ -11,7 +11,7 @@ export default function About() {
     const inner = <Aboutmepage spin={spinCube}></Aboutmepage>;
     var framehoverposition = useHover(0.6, 0.01);
 
-    var [currimg, setcurrimg] = useState(0);
+    var [currimg, setcurrimg] = useState(7);
 
     var ScrollY = useScroll();
 
@@ -23,9 +23,7 @@ export default function About() {
     var frameslide = useSlide([10, -1, 2.5], [9.71, 2.12, 2.65], 0.24, 0.26);
 
     function spinCube(img) {
-        setTimeout(() => {
-            setcurrimg(img);
-        }, 100);
+        setcurrimg(img);
 
         rotspeed.current = 50;
     }

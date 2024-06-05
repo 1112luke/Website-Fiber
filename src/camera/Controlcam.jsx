@@ -66,7 +66,7 @@ export default function Controlcam() {
             zr: 0,
             ta: 5,
         },
-        //slow move towards about
+        //slow move towards hi im lke
         {
             flex: 3,
             x: 19,
@@ -88,7 +88,7 @@ export default function Controlcam() {
             zr: -Math.PI / 2,
             ta: 0,
         },
-        //in 0
+        //looking at cube and webplane
         {
             flex: 4,
             x: 25.6,
@@ -99,26 +99,27 @@ export default function Controlcam() {
             zr: -Math.PI / 2,
             ta: 0,
         },
-        //end of timeliine scroll
+        //turn to look at projects
         {
-            flex: 2,
+            flex: 4,
             x: 35,
             y: -17.94,
             z: 326,
-            xr: 0.2,
-            yr: 0.97,
-            zr: 0.165,
+            xr: 0,
+            yr: 0.8,
+            zr: -0,
             ta: 0,
         },
+        //move forward towards projects
         {
-            flex: 20,
+            flex: 18,
             x: 0,
             y: 0,
             z: -20,
             xr: 0,
-            yr: 0,
+            yr: 0.8,
             zr: 0,
-            ta: 8,
+            ta: 0,
         },
     ];
 
