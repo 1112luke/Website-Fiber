@@ -1,6 +1,6 @@
 import { Html } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useHover from "../../hooks/useHover";
 
 export default function Facecube({ img }) {
@@ -9,6 +9,14 @@ export default function Facecube({ img }) {
     var position = useHover(0.5, 0.1);
 
     var images = ["nd.png", "EE.png", "code.jpg"];
+
+    useEffect(() => {
+        //preloadImages
+        images.forEach((image) => {
+            const img = new Image();
+            img.src = `/assets/${images[image]}`;
+        });
+    }, []);
 
     var imageels = [];
 
