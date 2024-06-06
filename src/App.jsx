@@ -15,7 +15,7 @@ import "./App.css";
 import { Color, Light, Quaternion } from "three";
 import Cube from "./cube";
 import Controlcam from "./camera/Controlcam";
-import { Model } from "./Bat";
+import { Model } from "./models/Bat";
 import { lazy } from "react";
 import Homescreen from "./Screenhtml/Homescreen";
 import Projects from "./Sections/projects/Projects";

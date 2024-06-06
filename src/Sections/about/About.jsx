@@ -37,7 +37,7 @@ export default function About() {
 
         setcuberot([newx, newy, newz]);
     });
-
+    //20, -20, 325
     return (
         <group position={[20, -20, 325]} rotation={[0.4, -0.6, 0.1]}>
             {cubeslide.inview ? (
