@@ -12,7 +12,7 @@ import {
     PointerLockControls,
 } from "@react-three/drei";
 import "./App.css";
-import { Color, Light } from "three";
+import { Color, Light, Quaternion } from "three";
 import Cube from "./cube";
 import Controlcam from "./camera/Controlcam";
 import { Model } from "./Bat";

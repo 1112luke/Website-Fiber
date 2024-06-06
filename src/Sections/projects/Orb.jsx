@@ -1,17 +1,25 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
+import { Vector3 } from "three";
 
 export default function Orb() {
-    var rotateref = useRef();
+    var rotateref = useRef(null);
+
+    var vectorx = useRef(new Vector3(0, 1, 0));
+
+    var vectory = useRef(new Vector3(-1, 0, 1));
+
+    var point = useRef(new Vector3(0, 0, 0));
 
     const Radius = 15;
 
-    var numcubes = 2;
+    var numcubes = 200;
 
     var { mouse } = useThree();
 
+    var three = useThree();
+
     var [pointarr, setpointarr] = useState([]);
-    var [cuberotation, setcuberotation] = useState([0, 0, 0]);
 
     useEffect(() => {
         //spawn cubes
@@ -19,11 +27,16 @@ export default function Orb() {
             createCubes();
         }
     }, []);
-
     useFrame((state, delta) => {
-        if (pointarr.length == numcubes) {
-            rotatePoints();
-            console.log("rotation", pointarr);
+        if (rotateref.current) {
+            rotateref.current.rotateOnWorldAxis(
+                vectory.current.normalize(),
+                mouse.y * -0.05
+            );
+            rotateref.current.rotateOnWorldAxis(
+                vectorx.current.normalize(),
+                mouse.x * -0.08
+            );
         }
     });
 
@@ -39,65 +52,46 @@ export default function Orb() {
 
             var currradius = Math.sqrt(1 - y * y);
 
+            //convert to cartesian
+            var currx = currradius * Math.cos(theta) * Radius;
+            var curry = y * Radius;
+            var currz = currradius * Math.sin(theta) * Radius;
+
             newcubes.push({
-                x: currradius * Math.cos(theta) * Radius,
-                y: y * Radius,
-                z: currradius * Math.sin(theta) * Radius,
+                x: currx,
+                y: curry,
+                z: currz,
                 key: i,
             });
-
-            setpointarr(newcubes);
         }
-    }
 
-    function rotatePoints() {
-        //this is not working, check console log. trying to rotate points by converting and incrementing theta and phi;
-        var points = pointarr;
-        for (var i = 0; i < numcubes; i++) {
-            var point = points[i];
-            //convert to spherical
-            var rho = Math.sqrt(
-                point.x * point.x + point.y * point.y + point.z * point.z
-            );
-            var phi = Math.atan2(point.y, point.x);
-            var theta = Math.acos(point.z / rho);
-
-            //change
-            theta += 0.1;
-            phi += 0.1;
-
-            //convert back to cartesian
-            var newpoint = {
-                x: rho * Math.sin(theta) * Math.cos(phi),
-                y: rho * Math.sin(theta) * Math.sin(phi),
-                z: rho * Math.cos(theta),
-                key: point.key,
-            };
-            points[i] = newpoint;
-        }
-        setpointarr(points);
+        setpointarr(newcubes);
     }
 
     return (
-        <group rotation={cuberotation} ref={rotateref}>
-            {/*center */}
-            <mesh scale={[0.2, 0.2, 0.2]}>
-                <meshBasicMaterial></meshBasicMaterial>
-                <sphereGeometry></sphereGeometry>
-            </mesh>
-            {/*cubes */}
-            {pointarr.map((point) => {
-                return (
-                    <mesh
-                        scale={[0.2, 0.2, 0.2]}
-                        position={[point.x, point.y, point.z]}
-                        key={point.key}
-                    >
-                        <meshBasicMaterial></meshBasicMaterial>
-                        <sphereGeometry></sphereGeometry>
-                    </mesh>
-                );
-            })}
-        </group>
+        <>
+            <group rotation={[0, 0, 0]} ref={rotateref}>
+                {/*center */}
+                <mesh scale={[0.2, 0.2, 0.2]}>
+                    <meshBasicMaterial></meshBasicMaterial>
+                    <sphereGeometry></sphereGeometry>
+                </mesh>
+
+                {/*cubes */}
+
+                {pointarr.map((point) => {
+                    return (
+                        <mesh
+                            scale={[0.2, 0.2, 0.2]}
+                            position={[point.x, point.y, point.z]}
+                            key={point.key}
+                        >
+                            <meshBasicMaterial></meshBasicMaterial>
+                            <sphereGeometry></sphereGeometry>
+                        </mesh>
+                    );
+                })}
+            </group>
+        </>
     );
 }
