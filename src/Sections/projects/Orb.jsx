@@ -1,20 +1,25 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef, useState } from "react";
-import { Vector3 } from "three";
+import { Quaternion, Vector3 } from "three";
 import Aboutmepage from "../about/Aboutmepage";
 import About from "../about/About";
 import { Laptop } from "../../models/Laptop";
-import Website from "./website";
 import useHover from "../../hooks/useHover";
+import Orbitobject from "./Orbitobject";
 
 export default function Orb() {
     var rotateref = useRef(null);
+
+    var [rotating, setrotating] = useState(true);
 
     var hoverpos = useHover(0.5, 1);
 
     var vectorx = useRef(new Vector3(0, 1, 0));
 
     var vectory = useRef(new Vector3(-1, 0, 1));
+
+    var worldposition = useRef(new Vector3());
+    var worldrotation = useRef(new Quaternion());
 
     const Radius = 15;
 
@@ -29,9 +34,11 @@ export default function Orb() {
         if (pointarr.length == 0) {
             createCubes();
         }
+        rotateref.current.getWorldPosition(worldposition.current);
+        rotateref.current.getWorldQuaternion(worldrotation.current);
     }, []);
     useFrame((state, delta) => {
-        if (rotateref.current) {
+        if (rotateref.current && rotating) {
             rotateref.current.rotateOnWorldAxis(
                 vectory.current.normalize(),
                 mouse.y * -0.03
@@ -86,7 +93,7 @@ export default function Orb() {
                 {pointarr.map((point, index) => {
                     if (index == 0) {
                         return (
-                            <Website
+                            <Orbitobject
                                 position={[point.x, point.y, point.z]}
                                 model={
                                     <Laptop
@@ -96,8 +103,11 @@ export default function Orb() {
                                 }
                                 name="Laptop"
                                 innertext="This Website"
+                                worldposition={worldposition.current}
+                                worldrotation={worldrotation.current}
+                                setrotating={setrotating}
                                 key={index}
-                            ></Website>
+                            ></Orbitobject>
                         );
                     }
                     if (index > 0) {

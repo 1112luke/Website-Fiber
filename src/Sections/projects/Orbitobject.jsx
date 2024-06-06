@@ -6,10 +6,20 @@ import { Vector3 } from "three";
 import { Html } from "@react-three/drei";
 import Webplane from "../../Webplane";
 
-export default function Website({ position, model, innertext, name }) {
+export default function Orbitobject({
+    position,
+    model,
+    innertext,
+    name,
+    setrotating,
+}) {
     var ref = useRef();
 
     var three = useThree();
+
+    var localpos = useRef(new Vector3());
+
+    var [focused, setfocused] = useState(false);
 
     var transitiontime = 0.5;
 
@@ -30,16 +40,33 @@ export default function Website({ position, model, innertext, name }) {
 
     return (
         <group
-            position={[
-                position[0] + hoverpos[0],
-                position[1] + hoverpos[1],
-                position[2] + hoverpos[2],
-            ]}
+            position={
+                !focused
+                    ? [
+                          position[0] + hoverpos[0],
+                          position[1] + hoverpos[1],
+                          position[2] + hoverpos[2],
+                      ]
+                    : [
+                          localpos.current.x,
+                          localpos.current.y,
+                          localpos.current.z,
+                      ]
+            }
             ref={ref}
             onPointerOver={() => {
                 setopacity(1);
 
                 three.scene.getObjectByName(name).scale.x *= 4 / 3;
+            }}
+            onClick={() => {
+                localpos.current.x = three.camera.position.x;
+                localpos.current.y = three.camera.position.y;
+                localpos.current.z = three.camera.position.z;
+                ref.current.worldToLocal(localpos.current);
+
+                setfocused(!focused);
+                setrotating(false);
             }}
             onPointerLeave={() => {
                 setopacity(0);

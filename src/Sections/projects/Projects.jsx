@@ -7,12 +7,15 @@ import Orb from "./Orb";
 export default function Projects() {
     var textref = useRef();
 
+    var allposition = [-3, -12, 242];
+    var orbposition = [4, -3, -2];
+
     useFrame((state, delta) => {
         textref.current.lookAt(state.camera.position);
     });
 
     return (
-        <group position={[-3, -12, 242]}>
+        <group position={allposition}>
             {/*text */}
             <group ref={textref}>
                 <Text3D
@@ -26,7 +29,7 @@ export default function Projects() {
                 </Text3D>
             </group>
             {/*orb */}
-            <group position={[4, -3, -2]}>
+            <group position={orbposition}>
                 <Orb></Orb>
             </group>
         </group>
