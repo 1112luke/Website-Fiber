@@ -24,11 +24,14 @@ import RotationControls from "./camera/RotationControls";
 import Scrollindicator from "./Screenhtml/Scollindicator";
 import Totop from "./Screenhtml/Totop";
 import About from "./Sections/about/About";
+import { Vector3 } from "three/src/Three.js";
 
 export default function App() {
     var cubesref = useRef(new Array());
     var [render, setrender] = useState(false);
     var radiusref = useRef(300);
+
+    var [lookatpos, setlookatpos] = useState(new Vector3(0, 0, 0));
 
     var fp = false;
     var rc = false;
@@ -95,7 +98,12 @@ export default function App() {
 
                 <Suspense fallback={null}>
                     <ScrollControls damping={0.15} pages={2} distance={20}>
-                        {dc && <Controlcam></Controlcam>}
+                        {dc && (
+                            <Controlcam
+                                lookatpos={lookatpos}
+                                setlookatpos={setlookatpos}
+                            ></Controlcam>
+                        )}
                         <Scroll>
                             {cubesref.current.map((cube) => {
                                 return (
@@ -113,7 +121,7 @@ export default function App() {
                             <Model></Model>
 
                             <About></About>
-                            <Projects></Projects>
+                            <Projects setlookatpos={setlookatpos}></Projects>
                             <Homescreen></Homescreen>
                         </Scroll>
                         <Scrollindicator></Scrollindicator>

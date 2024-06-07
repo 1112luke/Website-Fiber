@@ -24,7 +24,6 @@ export default function Webplane({
             distanceFactor={distanceFactor ? distanceFactor : 0.2}
             portal={{ current: gl.domElement.parentNode }}
             transform
-            occlude
         >
             {src ? (
                 <iframe

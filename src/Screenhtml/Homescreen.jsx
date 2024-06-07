@@ -33,14 +33,14 @@ export default function Homescreen() {
                         <li>
                             <Button
                                 text="about"
-                                scrollamount={1000}
+                                scrollamount={0.3}
                                 scrollDat={scrollDat}
                             ></Button>
                         </li>
                         <li>
                             <Button
-                                text="about"
-                                scrollamount={9000}
+                                text="Projects"
+                                scrollamount={0.559}
                                 scrollDat={scrollDat}
                             ></Button>
                         </li>

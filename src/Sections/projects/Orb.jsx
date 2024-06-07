@@ -7,7 +7,7 @@ import { Laptop } from "../../models/Laptop";
 import useHover from "../../hooks/useHover";
 import Orbitobject from "./Orbitobject";
 
-export default function Orb() {
+export default function Orb({ setlookatpos }) {
     var rotateref = useRef(null);
 
     var [rotating, setrotating] = useState(true);
@@ -18,25 +18,36 @@ export default function Orb() {
 
     var vectory = useRef(new Vector3(-1, 0, 1));
 
-    var worldposition = useRef(new Vector3());
-    var worldrotation = useRef(new Quaternion());
+    var [focuseditem, setfocuseditem] = useState("");
+
+    var three = useThree();
 
     const Radius = 15;
 
     var numcubes = 200;
 
-    var { mouse } = useThree();
+    var mouse = three.mouse;
 
     var [pointarr, setpointarr] = useState([]);
+
+    function getLocalCamPos() {
+        var vec = new Vector3();
+        vec.x = three.camera.position.x;
+        vec.y = three.camera.position.y;
+        vec.z = three.camera.position.z;
+
+        rotateref.current.worldToLocal(vec);
+
+        return vec;
+    }
 
     useEffect(() => {
         //spawn cubes
         if (pointarr.length == 0) {
             createCubes();
         }
-        rotateref.current.getWorldPosition(worldposition.current);
-        rotateref.current.getWorldQuaternion(worldrotation.current);
     }, []);
+
     useFrame((state, delta) => {
         if (rotateref.current && rotating) {
             rotateref.current.rotateOnWorldAxis(
@@ -94,18 +105,21 @@ export default function Orb() {
                     if (index == 0) {
                         return (
                             <Orbitobject
-                                position={[point.x, point.y, point.z]}
                                 model={
                                     <Laptop
                                         scale={[10, 10, 10]}
                                         name="Laptop"
+                                        focuseditem={focuseditem}
                                     ></Laptop>
                                 }
                                 name="Laptop"
                                 innertext="This Website"
-                                worldposition={worldposition.current}
-                                worldrotation={worldrotation.current}
+                                position={[point.x, point.y, point.z]}
                                 setrotating={setrotating}
+                                rotating={rotating}
+                                camposition={getLocalCamPos}
+                                setlookatpos={setlookatpos}
+                                setfocuseditem={setfocuseditem}
                                 key={index}
                             ></Orbitobject>
                         );

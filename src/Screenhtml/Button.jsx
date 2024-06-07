@@ -1,7 +1,14 @@
 import { motion } from "framer-motion";
 import { useScroll } from "@react-three/drei";
+import { useEffect } from "react";
 
 export default function Button({ text, scrollamount, scrollDat }) {
+    useEffect(() => {
+        if (scrollDat) {
+            scrollamount = scrollamount * scrollDat.el.scrollHeight;
+        }
+    }, []);
+
     return (
         <motion.div
             style={{

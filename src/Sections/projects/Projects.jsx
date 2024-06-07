@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import Orb from "./Orb";
 
-export default function Projects() {
+export default function Projects({ setlookatpos }) {
     var textref = useRef();
 
     var allposition = [-3, -12, 242];
@@ -30,7 +30,7 @@ export default function Projects() {
             </group>
             {/*orb */}
             <group position={orbposition}>
-                <Orb></Orb>
+                <Orb setlookatpos={setlookatpos}></Orb>
             </group>
         </group>
     );

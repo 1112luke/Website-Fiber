@@ -2,7 +2,7 @@ import { useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 
-export default function Controlcam() {
+export default function Controlcam({ lookatpos }) {
     var posx = useRef();
     var posy = useRef();
     var countref = useRef(0);
@@ -195,7 +195,6 @@ export default function Controlcam() {
         }
 
         //set position based on path
-
         state.camera.position.x =
             previouspath.x +
             currentpathprogress * (currentpath.x - previouspath.x) +
@@ -209,16 +208,20 @@ export default function Controlcam() {
             previouspath.z +
             currentpathprogress * (currentpath.z - previouspath.z);
 
-        //set rotation based on path
-        state.camera.rotation.x =
-            previouspath.xr +
-            currentpathprogress * (currentpath.xr - previouspath.xr);
-        state.camera.rotation.y =
-            previouspath.yr +
-            currentpathprogress * (currentpath.yr - previouspath.yr);
-        state.camera.rotation.z =
-            previouspath.zr +
-            currentpathprogress * (currentpath.zr - previouspath.zr);
+        //set rotation based on path or focused object
+        if (lookatpos.x == 0) {
+            state.camera.rotation.x =
+                previouspath.xr +
+                currentpathprogress * (currentpath.xr - previouspath.xr);
+            state.camera.rotation.y =
+                previouspath.yr +
+                currentpathprogress * (currentpath.yr - previouspath.yr);
+            state.camera.rotation.z =
+                previouspath.zr +
+                currentpathprogress * (currentpath.zr - previouspath.zr);
+        } else {
+            state.camera.lookAt(lookatpos);
+        }
     });
 
     return <></>;
