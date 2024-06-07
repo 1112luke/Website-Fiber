@@ -194,6 +194,8 @@ export default function Controlcam({ lookatpos }) {
             prevpathref.current = currentPathRef.current;
         }
 
+        //lookatpos.x == 0 indicates an item is not in focus
+
         //set position based on path
         state.camera.position.x =
             previouspath.x +

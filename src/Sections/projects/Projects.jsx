@@ -1,6 +1,6 @@
-import { Text3D } from "@react-three/drei";
+import { Text3D, useScroll } from "@react-three/drei";
 import Timeline from "./Timeline";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import Orb from "./Orb";
 
@@ -10,8 +10,14 @@ export default function Projects({ setlookatpos }) {
     var allposition = [-3, -12, 242];
     var orbposition = [4, -3, -2];
 
+    var [inview, setinview] = useState(false);
+
+    var scrolldat = useScroll();
+
     useFrame((state, delta) => {
         textref.current.lookAt(state.camera.position);
+
+        setinview(scrolldat.visible(0.5, 0.6));
     });
 
     return (
@@ -29,9 +35,11 @@ export default function Projects({ setlookatpos }) {
                 </Text3D>
             </group>
             {/*orb */}
-            <group position={orbposition}>
-                <Orb setlookatpos={setlookatpos}></Orb>
-            </group>
+            {inview && (
+                <group position={orbposition}>
+                    <Orb setlookatpos={setlookatpos}></Orb>
+                </group>
+            )}
         </group>
     );
 }
