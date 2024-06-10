@@ -3,7 +3,7 @@ import { Laptop } from "../../models/Laptop";
 import { useFrame, useThree } from "@react-three/fiber";
 import useHover from "../../hooks/useHover";
 import { Vector3 } from "three";
-import { Html } from "@react-three/drei";
+import { Html, useScroll } from "@react-three/drei";
 import Webplane from "../../Webplane";
 import { useSpring } from "framer-motion";
 
@@ -20,6 +20,8 @@ export default function Orbitobject({
 }) {
     var ref = useRef();
     var three = useThree();
+
+    var scrolldat = useScroll();
 
     var localpos = useRef(new Vector3(0, 0, 0));
     var referencevec = useRef(new Vector3(0, 0, 0));
@@ -69,17 +71,20 @@ export default function Orbitobject({
             localpos.current = camposition();
 
             //set focused item
+            console.log("setting,", name);
+            console.log(setfocuseditem);
             setfocuseditem(name);
 
             //translate to be in frame
             (localpos.current.x -= 0),
-                (localpos.current.y -= 6),
+                (localpos.current.y -= 6.0),
                 (localpos.current.z -= 0.7),
                 //set lookat position
                 ref.current.getWorldPosition(referencevec.current);
+
             //translate to look more directly
-            referencevec.current.x += 0.5;
-            referencevec.current.y += 0.8;
+            referencevec.current.x -= 1;
+            referencevec.current.y += 1.1;
             setlookatpos(referencevec.current);
 
             //move based on mouse slower
@@ -114,6 +119,8 @@ export default function Orbitobject({
                 setopacity(1);
                 //scale
                 scaletarget.current *= 4 / 3;
+                //set mouse
+                document.getElementById("root").style.cursor = "pointer";
             }}
             onClick={(e) => {
                 //set focused
@@ -123,13 +130,15 @@ export default function Orbitobject({
                 setrotating(!rotating);
 
                 //because I am clicking multiple of the models
-                e.stopPropagation();
+                //e.stopPropagation();
             }}
             onPointerLeave={() => {
                 //hide label
                 setopacity(0);
                 //scale
                 scaletarget.current *= 3 / 4;
+                //set mouse
+                document.getElementById("root").style.cursor = "default";
             }}
         >
             <group position={[0, -2, 1]}>

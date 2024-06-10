@@ -6,6 +6,7 @@ import About from "../about/About";
 import { Laptop } from "../../models/Laptop";
 import useHover from "../../hooks/useHover";
 import Orbitobject from "./Orbitobject";
+import Calcstack from "../../models/Calcstack/Calcstack";
 
 export default function Orb({ setlookatpos }) {
     var rotateref = useRef(null);
@@ -24,7 +25,7 @@ export default function Orb({ setlookatpos }) {
 
     const Radius = 15;
 
-    var numcubes = 200;
+    var numcubes = 50;
 
     var mouse = three.mouse;
 
@@ -59,6 +60,7 @@ export default function Orb({ setlookatpos }) {
                 mouse.x * -0.05
             );
         }
+        console.log(focuseditem);
     });
 
     function createCubes() {
@@ -102,7 +104,7 @@ export default function Orb({ setlookatpos }) {
                 {/*cubes */}
 
                 {pointarr.map((point, index) => {
-                    if (index == 0) {
+                    if (index == 1) {
                         return (
                             <Orbitobject
                                 model={
@@ -124,7 +126,29 @@ export default function Orb({ setlookatpos }) {
                             ></Orbitobject>
                         );
                     }
-                    if (index > 0) {
+                    if (index == 2) {
+                        return (
+                            <Orbitobject
+                                model={
+                                    <Calcstack
+                                        name="Calcstack"
+                                        focuseditem={focuseditem}
+                                        scale={[1, 1, 1]}
+                                    ></Calcstack>
+                                }
+                                name="Calcstack"
+                                innertext="Calculus Music Video"
+                                position={[point.x, point.y, point.z]}
+                                setrotating={setrotating}
+                                rotating={rotating}
+                                camposition={getLocalCamPos}
+                                setlookatpos={setlookatpos}
+                                setfocuseditem={setfocuseditem}
+                                key={index}
+                            ></Orbitobject>
+                        );
+                    }
+                    if (index > 2) {
                         return (
                             <mesh
                                 scale={[0.2, 0.2, 0.2]}

@@ -1,11 +1,13 @@
 import { motion } from "framer-motion";
 import { useScroll } from "@react-three/drei";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Button({ text, scrollamount, scrollDat }) {
+    var scrollpos = useRef(scrollamount);
+
     useEffect(() => {
         if (scrollDat) {
-            scrollamount = scrollamount * scrollDat.el.scrollHeight;
+            scrollpos.current = scrollamount * scrollDat.el.scrollHeight;
         }
     }, []);
 
@@ -20,7 +22,7 @@ export default function Button({ text, scrollamount, scrollDat }) {
             whileTap={{ scale: 0.8 }}
             transition={{ type: "spring", stiffness: 400 }}
             onClick={() => {
-                scrollDat.el.scrollTo(0, scrollamount);
+                scrollDat.el.scrollTo(0, scrollpos.current);
             }}
             id="button"
         >
