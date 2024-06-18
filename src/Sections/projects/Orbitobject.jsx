@@ -17,6 +17,7 @@ export default function Orbitobject({
     rotating,
     setlookatpos,
     setfocuseditem,
+    focuseditem,
 }) {
     var ref = useRef();
     var three = useThree();
@@ -27,6 +28,14 @@ export default function Orbitobject({
     var referencevec = useRef(new Vector3(0, 0, 0));
 
     var [focused, setfocused] = useState(false);
+
+    useEffect(() => {
+        if (focuseditem == name) {
+            setfocused(true);
+        } else {
+            setfocused(false);
+        }
+    }, [focuseditem]);
 
     //for display of webplane
     var transitiontime = 0.5;
@@ -57,30 +66,19 @@ export default function Orbitobject({
             three.scene.getObjectByName(name).scale.x = scale.current;
             three.scene.getObjectByName(name).scale.y = scale.current;
             three.scene.getObjectByName(name).scale.z = scale.current;
-
-            if (referencevec.x != 0) {
-                setlookatpos(new Vector3(0, 0, 0));
-                referencevec.current = new Vector3(0, 0, 0);
-            }
-
-            setfocuseditem("");
         }
 
         if (focused) {
             //set position
             localpos.current = camposition();
 
-            //set focused item
-            console.log("setting,", name);
-            console.log(setfocuseditem);
-            setfocuseditem(name);
-
             //translate to be in frame
-            (localpos.current.x -= 0),
-                (localpos.current.y -= 6.0),
-                (localpos.current.z -= 0.7),
-                //set lookat position
-                ref.current.getWorldPosition(referencevec.current);
+            localpos.current.x -= 4;
+            localpos.current.y += 2;
+            localpos.current.z -= 4;
+
+            //set lookat position
+            ref.current.getWorldPosition(referencevec.current);
 
             //translate to look more directly
             referencevec.current.x -= 1;
@@ -92,6 +90,18 @@ export default function Orbitobject({
             ref.current.rotateOnAxis(vectory.current, mouse.y * 0.1);
         }
     });
+
+    useEffect(() => {
+        if (focused) {
+        }
+
+        if (!focused) {
+            if (referencevec.current.x != 0) {
+                setlookatpos(new Vector3(0, 0, 0));
+                referencevec.current = new Vector3(0, 0, 0);
+            }
+        }
+    }, [focused]);
 
     //set scale when scaletarget changes
     useEffect(() => {
@@ -123,11 +133,11 @@ export default function Orbitobject({
                 document.getElementById("root").style.cursor = "pointer";
             }}
             onClick={(e) => {
-                //set focused
-                setfocused(!focused);
-
-                //set rotating
-                setrotating(!rotating);
+                if (focused) {
+                    setfocuseditem("");
+                } else {
+                    setfocuseditem(name);
+                }
 
                 //because I am clicking multiple of the models
                 //e.stopPropagation();

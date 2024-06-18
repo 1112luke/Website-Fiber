@@ -31,6 +31,14 @@ export default function Orb({ setlookatpos }) {
 
     var [pointarr, setpointarr] = useState([]);
 
+    useEffect(() => {
+        if (focuseditem == "") {
+            setrotating(true);
+        } else {
+            setrotating(false);
+        }
+    }, [focuseditem]);
+
     function getLocalCamPos() {
         var vec = new Vector3();
         vec.x = three.camera.position.x;
@@ -60,7 +68,6 @@ export default function Orb({ setlookatpos }) {
                 mouse.x * -0.05
             );
         }
-        console.log(focuseditem);
     });
 
     function createCubes() {
@@ -122,6 +129,7 @@ export default function Orb({ setlookatpos }) {
                                 camposition={getLocalCamPos}
                                 setlookatpos={setlookatpos}
                                 setfocuseditem={setfocuseditem}
+                                focuseditem={focuseditem}
                                 key={index}
                             ></Orbitobject>
                         );
@@ -144,6 +152,7 @@ export default function Orb({ setlookatpos }) {
                                 camposition={getLocalCamPos}
                                 setlookatpos={setlookatpos}
                                 setfocuseditem={setfocuseditem}
+                                focuseditem={focuseditem}
                                 key={index}
                             ></Orbitobject>
                         );
