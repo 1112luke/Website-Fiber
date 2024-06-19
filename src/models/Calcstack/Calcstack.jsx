@@ -119,7 +119,7 @@ export default function Calcstack({ name, focuseditem }) {
                                             style={{
                                                 width: "100%",
                                                 height: "30%",
-                                                backgroundColor: "#24587e",
+                                                backgroundColor: "black",
                                                 borderBottomLeftRadius: "40px",
                                                 borderBottomRightRadius: "40px",
                                                 borderRight: "5px solid orange",
@@ -201,7 +201,7 @@ export default function Calcstack({ name, focuseditem }) {
                                                                 position:
                                                                     "absolute",
                                                                 bottom: "-330px",
-                                                                left: "660px",
+                                                                left: "620px",
                                                                 fontSize:
                                                                     "30px",
                                                                 flex: "",
