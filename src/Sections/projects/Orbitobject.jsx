@@ -92,7 +92,7 @@ export default function Orbitobject({
 
     useEffect(() => {
         if (focused) {
-            scaletarget.current *= 3;
+            scaletarget.current = 50;
             sethovering(false);
         }
 

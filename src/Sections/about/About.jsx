@@ -28,7 +28,7 @@ export default function About() {
         rotspeed.current = 50;
     }
 
-    useFrame(() => {
+    useFrame((state, delta) => {
         rotspeed.current *= 0.9;
 
         var newx = cuberot[0] + rotspeed.current * 0.1;

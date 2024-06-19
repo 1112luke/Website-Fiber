@@ -108,7 +108,7 @@ export function Laptop(props) {
             {...props}
             dispose={null}
             rotation={[0.5, 2.4, -0.2]}
-            position={[-1.4, 0, -0.3]}
+            position={infocus ? [-4, -3, 0] : [0, 0, 0]}
         >
             <mesh
                 castShadow
