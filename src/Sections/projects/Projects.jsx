@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { useFrame } from "@react-three/fiber";
 import Orb from "./Orb";
 
-export default function Projects({ setlookatpos }) {
+export default function Projects({ setlookatpos, setcamrotate }) {
     var textref = useRef();
 
     var allposition = [-3, -12, 242];
@@ -37,7 +37,10 @@ export default function Projects({ setlookatpos }) {
             {/*orb */}
             {inview && (
                 <group position={orbposition}>
-                    <Orb setlookatpos={setlookatpos}></Orb>
+                    <Orb
+                        setlookatpos={setlookatpos}
+                        setcamrotate={setcamrotate}
+                    ></Orb>
                 </group>
             )}
         </group>

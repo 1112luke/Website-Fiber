@@ -2,7 +2,7 @@ import { useScroll } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 
-export default function Controlcam({ lookatpos }) {
+export default function Controlcam({ lookatpos, camrotate }) {
     var posx = useRef();
     var posy = useRef();
     var countref = useRef(0);

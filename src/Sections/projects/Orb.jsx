@@ -8,7 +8,7 @@ import useHover from "../../hooks/useHover";
 import Orbitobject from "./Orbitobject";
 import Calcstack from "../../models/Calcstack/Calcstack";
 
-export default function Orb({ setlookatpos }) {
+export default function Orb({ setlookatpos, setcamrotate }) {
     var rotateref = useRef(null);
 
     var [rotating, setrotating] = useState(true);
@@ -128,6 +128,7 @@ export default function Orb({ setlookatpos }) {
                                 rotating={rotating}
                                 camposition={getLocalCamPos}
                                 setlookatpos={setlookatpos}
+                                setcamrotate={setcamrotate}
                                 setfocuseditem={setfocuseditem}
                                 focuseditem={focuseditem}
                                 key={index}
@@ -151,6 +152,7 @@ export default function Orb({ setlookatpos }) {
                                 rotating={rotating}
                                 camposition={getLocalCamPos}
                                 setlookatpos={setlookatpos}
+                                setcamrotate={setcamrotate}
                                 setfocuseditem={setfocuseditem}
                                 focuseditem={focuseditem}
                                 key={index}

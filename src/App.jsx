@@ -32,6 +32,7 @@ export default function App() {
     var radiusref = useRef(300);
 
     var [lookatpos, setlookatpos] = useState(new Vector3(0, 0, 0));
+    var [camrotate, setcamrotate] = useState(new Vector3(0, 0, 0));
 
     var fp = false;
     var rc = false;
@@ -102,6 +103,7 @@ export default function App() {
                             <Controlcam
                                 lookatpos={lookatpos}
                                 setlookatpos={setlookatpos}
+                                camrotate={camrotate}
                             ></Controlcam>
                         )}
                         <Scroll>
@@ -121,7 +123,10 @@ export default function App() {
                             <Model></Model>
 
                             <About></About>
-                            <Projects setlookatpos={setlookatpos}></Projects>
+                            <Projects
+                                setlookatpos={setlookatpos}
+                                setcamrotate={setcamrotate}
+                            ></Projects>
                             <Homescreen></Homescreen>
                         </Scroll>
                         <Scrollindicator></Scrollindicator>

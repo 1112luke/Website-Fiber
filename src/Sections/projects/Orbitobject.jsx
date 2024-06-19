@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Laptop } from "../../models/Laptop";
 import { useFrame, useThree } from "@react-three/fiber";
 import useHover from "../../hooks/useHover";
-import { Vector3 } from "three";
+import { Quaternion, Vector3 } from "three";
 import { Html, useScroll } from "@react-three/drei";
 import Webplane from "../../Webplane";
 import { useSpring } from "framer-motion";
@@ -12,9 +12,8 @@ export default function Orbitobject({
     model,
     innertext,
     name,
-    setrotating,
     camposition,
-    rotating,
+    setcamrotate,
     setlookatpos,
     setfocuseditem,
     focuseditem,
@@ -26,6 +25,7 @@ export default function Orbitobject({
 
     var localpos = useRef(new Vector3(0, 0, 0));
     var referencevec = useRef(new Vector3(0, 0, 0));
+    var camrotatevec = useRef(new Quaternion());
 
     var [focused, setfocused] = useState(false);
 
@@ -81,9 +81,17 @@ export default function Orbitobject({
             ref.current.getWorldPosition(referencevec.current);
 
             //translate to look more directly
-            referencevec.current.x -= 1;
-            referencevec.current.y += 1.1;
+            referencevec.current.x -= 0.7;
+            referencevec.current.y += 1.5;
+            referencevec.current.z -= 0.3;
+
             setlookatpos(referencevec.current);
+
+            ref.current.getWorldQuaternion(camrotatevec.current);
+
+            camrotatevec.current.w += 0;
+
+            setcamrotate(camrotatevec.current);
 
             //move based on mouse slower
             ref.current.rotateOnAxis(vectorx.current, mouse.x * 0.15);
