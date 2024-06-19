@@ -12,8 +12,7 @@ export default function Orbitobject({
     model,
     innertext,
     name,
-    camposition,
-    setcamrotate,
+    sethovering,
     setlookatpos,
     setfocuseditem,
     focuseditem,
@@ -25,7 +24,6 @@ export default function Orbitobject({
 
     var localpos = useRef(new Vector3(0, 0, 0));
     var referencevec = useRef(new Vector3(0, 0, 0));
-    var camrotatevec = useRef(new Quaternion());
 
     var [focused, setfocused] = useState(false);
 
@@ -71,10 +69,6 @@ export default function Orbitobject({
         }
 
         if (focused) {
-            console.log(name);
-            //set position
-            localpos.current = camposition();
-
             //translate to be in frame
             localpos.current.x -= 4;
             localpos.current.y += 2;
@@ -90,12 +84,6 @@ export default function Orbitobject({
 
             setlookatpos(referencevec.current);
 
-            ref.current.getWorldQuaternion(camrotatevec.current);
-
-            camrotatevec.current.w += 0;
-
-            setcamrotate(camrotatevec.current);
-
             //move based on mouse slower
             ref.current.rotateOnAxis(vectorx.current, mouse.x * 0.15);
             ref.current.rotateOnAxis(vectory.current, mouse.y * 0.1);
@@ -105,9 +93,11 @@ export default function Orbitobject({
     useEffect(() => {
         if (focused) {
             scaletarget.current *= 3;
+            sethovering(false);
         }
 
         if (!focused) {
+            sethovering(true);
             if (referencevec.current.x != 0) {
                 setlookatpos(new Vector3(0, 0, 0));
                 referencevec.current = new Vector3(0, 0, 0);

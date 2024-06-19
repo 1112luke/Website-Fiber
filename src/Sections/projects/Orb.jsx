@@ -12,6 +12,7 @@ export default function Orb({ setlookatpos, setcamrotate }) {
     var rotateref = useRef(null);
 
     var [rotating, setrotating] = useState(true);
+    var [hovering, sethovering] = useState(true);
 
     var hoverpos = useHover(0.5, 1);
 
@@ -100,7 +101,11 @@ export default function Orb({ setlookatpos, setcamrotate }) {
 
     return (
         <>
-            <group rotation={[0, 0, 0]} ref={rotateref} position={hoverpos}>
+            <group
+                rotation={[0, 0, 0]}
+                ref={rotateref}
+                position={hovering ? hoverpos : [0, 0, 0]}
+            >
                 {/*center
                  <mesh scale={[0.2, 0.2, 0.2]}>
                     <meshBasicMaterial></meshBasicMaterial>
@@ -126,9 +131,8 @@ export default function Orb({ setlookatpos, setcamrotate }) {
                                 position={[point.x, point.y, point.z]}
                                 setrotating={setrotating}
                                 rotating={rotating}
-                                camposition={getLocalCamPos}
+                                sethovering={sethovering}
                                 setlookatpos={setlookatpos}
-                                setcamrotate={setcamrotate}
                                 setfocuseditem={setfocuseditem}
                                 focuseditem={focuseditem}
                                 key={index}
@@ -150,9 +154,8 @@ export default function Orb({ setlookatpos, setcamrotate }) {
                                 position={[point.x, point.y, point.z]}
                                 setrotating={setrotating}
                                 rotating={rotating}
-                                camposition={getLocalCamPos}
+                                sethovering={sethovering}
                                 setlookatpos={setlookatpos}
-                                setcamrotate={setcamrotate}
                                 setfocuseditem={setfocuseditem}
                                 focuseditem={focuseditem}
                                 key={index}
