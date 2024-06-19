@@ -95,15 +95,13 @@ export function Laptop(props) {
         </div>
     );
 
-    useEffect(() => {}, []);
-
-    useFrame(() => {
+    useEffect(() => {
         if (focuseditem == name) {
             setinfocus(true);
         } else {
             setinfocus(false);
         }
-    });
+    }, [focuseditem]);
 
     return (
         <group

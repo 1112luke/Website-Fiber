@@ -61,11 +61,11 @@ export default function Orb({ setlookatpos, setcamrotate }) {
         if (rotateref.current && rotating) {
             rotateref.current.rotateOnWorldAxis(
                 vectory.current.normalize(),
-                mouse.y * -0.03
+                mouse.y * -2 * delta
             );
             rotateref.current.rotateOnWorldAxis(
                 vectorx.current.normalize(),
-                mouse.x * -0.05
+                mouse.x * -2 * delta
             );
         }
     });

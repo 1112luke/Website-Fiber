@@ -58,17 +58,20 @@ export default function Orbitobject({
     useFrame((state) => {
         //rotate based on mouse
         ref.current.lookAt(state.camera.position);
+
+        //set scale
+        three.scene.getObjectByName(name).scale.x = scale.current;
+        three.scene.getObjectByName(name).scale.y = scale.current;
+        three.scene.getObjectByName(name).scale.z = scale.current;
+
         if (!focused) {
             //move based on mouse
             ref.current.rotateOnAxis(vectorx.current, mouse.x);
             ref.current.rotateOnAxis(vectory.current, mouse.y);
-            //set scale
-            three.scene.getObjectByName(name).scale.x = scale.current;
-            three.scene.getObjectByName(name).scale.y = scale.current;
-            three.scene.getObjectByName(name).scale.z = scale.current;
         }
 
         if (focused) {
+            console.log(name);
             //set position
             localpos.current = camposition();
 
@@ -101,6 +104,7 @@ export default function Orbitobject({
 
     useEffect(() => {
         if (focused) {
+            scaletarget.current *= 3;
         }
 
         if (!focused) {
@@ -108,6 +112,7 @@ export default function Orbitobject({
                 setlookatpos(new Vector3(0, 0, 0));
                 referencevec.current = new Vector3(0, 0, 0);
             }
+            scaletarget.current = 10;
         }
     }, [focused]);
 
@@ -118,25 +123,20 @@ export default function Orbitobject({
 
     return (
         <group
-            position={
-                !focused
-                    ? [
-                          position[0] + hoverpos[0],
-                          position[1] + hoverpos[1],
-                          position[2] + hoverpos[2],
-                      ]
-                    : [
-                          localpos.current.x,
-                          localpos.current.y,
-                          localpos.current.z,
-                      ]
-            }
+            position={[
+                position[0] + hoverpos[0],
+                position[1] + hoverpos[1],
+                position[2] + hoverpos[2],
+            ]}
             ref={ref}
             onPointerOver={() => {
                 //show label
                 setopacity(1);
                 //scale
-                scaletarget.current *= 4 / 3;
+                if (!focused) {
+                    scaletarget.current *= 4 / 3;
+                }
+
                 //set mouse
                 document.getElementById("root").style.cursor = "pointer";
             }}
@@ -154,7 +154,10 @@ export default function Orbitobject({
                 //hide label
                 setopacity(0);
                 //scale
-                scaletarget.current *= 3 / 4;
+                if (!focused) {
+                    scaletarget.current *= 3 / 4;
+                }
+
                 //set mouse
                 document.getElementById("root").style.cursor = "default";
             }}
