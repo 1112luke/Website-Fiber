@@ -8,7 +8,13 @@ import { useGLTF } from "@react-three/drei";
 export function Microphone(props) {
     const { nodes, materials } = useGLTF("/microphone/microphone.gltf");
     return (
-        <group {...props} dispose={null} scale={[0.2, 0.2, 0.2]}>
+        <group
+            {...props}
+            dispose={null}
+            scale={[0.1, 0.1, 0.1]}
+            position={[0.45, -0.3, 0.4]}
+            rotation={[-0.3, 0, 0.2]}
+        >
             <mesh
                 castShadow
                 receiveShadow

@@ -76,8 +76,8 @@ export default function Calcstack({ name, focuseditem }) {
 
     return (
         <group
-            scale={[0.1, 0.1, 0.1]}
-            position={infocus ? [8, 0, 0] : [0, 0, 0]}
+            scale={infocus ? [0.07, 0.07, 0.07] : [0.1, 0.1, 0.1]}
+            position={infocus ? [10, 0, 0] : [0, 0, 0]}
         >
             <group name={name}>
                 {infocus && (

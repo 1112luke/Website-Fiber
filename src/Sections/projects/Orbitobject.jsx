@@ -16,6 +16,7 @@ export default function Orbitobject({
     setlookatpos,
     setfocuseditem,
     focuseditem,
+    scalein,
 }) {
     var ref = useRef();
     var three = useThree();
@@ -45,8 +46,8 @@ export default function Orbitobject({
     var mouse = three.mouse;
 
     //for spring effect oh hover
-    var scale = useSpring(10, { stiffness: 300, damping: 10 });
-    var scaletarget = useRef(10);
+    var scale = useSpring(scalein, { stiffness: 300, damping: 10 });
+    var scaletarget = useRef(scalein);
 
     //potentially make spring effect for smooth on focus behavior
 
@@ -92,7 +93,7 @@ export default function Orbitobject({
 
     useEffect(() => {
         if (focused) {
-            scaletarget.current = 50;
+            scaletarget.current = scalein * 5;
             sethovering(false);
         }
 
@@ -102,7 +103,7 @@ export default function Orbitobject({
                 setlookatpos(new Vector3(0, 0, 0));
                 referencevec.current = new Vector3(0, 0, 0);
             }
-            scaletarget.current = 10;
+            scaletarget.current = scalein;
         }
     }, [focused]);
 

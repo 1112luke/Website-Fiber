@@ -7,6 +7,7 @@ import { Laptop } from "../../models/Laptop";
 import useHover from "../../hooks/useHover";
 import Orbitobject from "./Orbitobject";
 import Calcstack from "../../models/Calcstack/Calcstack";
+import { Drone } from "../../models/Drone/Drone";
 
 export default function Orb({ setlookatpos, setcamrotate }) {
     var rotateref = useRef(null);
@@ -116,7 +117,7 @@ export default function Orb({ setlookatpos, setcamrotate }) {
                 {/*cubes */}
 
                 {pointarr.map((point, index) => {
-                    if (index == 1) {
+                    if (index == 0) {
                         return (
                             <Orbitobject
                                 model={
@@ -135,18 +136,18 @@ export default function Orb({ setlookatpos, setcamrotate }) {
                                 setlookatpos={setlookatpos}
                                 setfocuseditem={setfocuseditem}
                                 focuseditem={focuseditem}
+                                scalein={12}
                                 key={index}
                             ></Orbitobject>
                         );
                     }
-                    if (index == 2) {
+                    if (index == 1) {
                         return (
                             <Orbitobject
                                 model={
                                     <Calcstack
                                         name="Calcstack"
                                         focuseditem={focuseditem}
-                                        scale={[1, 1, 1]}
                                     ></Calcstack>
                                 }
                                 name="Calcstack"
@@ -158,6 +159,30 @@ export default function Orb({ setlookatpos, setcamrotate }) {
                                 setlookatpos={setlookatpos}
                                 setfocuseditem={setfocuseditem}
                                 focuseditem={focuseditem}
+                                scalein={20}
+                                key={index}
+                            ></Orbitobject>
+                        );
+                    }
+                    if (index == 2) {
+                        return (
+                            <Orbitobject
+                                model={
+                                    <Drone
+                                        name="Drone"
+                                        focuseditem={focuseditem}
+                                    ></Drone>
+                                }
+                                name="Drone"
+                                innertext="Planes & Drones"
+                                position={[point.x, point.y, point.z]}
+                                setrotating={setrotating}
+                                rotating={rotating}
+                                sethovering={sethovering}
+                                setlookatpos={setlookatpos}
+                                setfocuseditem={setfocuseditem}
+                                focuseditem={focuseditem}
+                                scalein={10}
                                 key={index}
                             ></Orbitobject>
                         );
