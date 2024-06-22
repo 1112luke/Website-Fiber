@@ -122,6 +122,7 @@ export default function Orbitobject({
             ref={ref}
             onPointerOver={() => {
                 //show label
+
                 setopacity(1);
                 //scale
                 if (!focused) {
@@ -154,35 +155,38 @@ export default function Orbitobject({
             }}
         >
             <group position={[0, -2, 1]}>
-                <Webplane
-                    width={1920}
-                    height={0}
-                    distanceFactor={1}
-                    inner={
-                        <div
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                backgroundColor: "red",
-                                transition: `opacity ${transitiontime}s`,
-                                opacity: opacity,
-                                display: "flex",
-                                justifyContent: "center",
-                                alignItems: "center",
-                            }}
-                        >
-                            <h2
+                {!focused && (
+                    <Webplane
+                        width={1920}
+                        height={0}
+                        distanceFactor={1}
+                        inner={
+                            <div
                                 style={{
-                                    fontSize: "200px",
-                                    cursor: "default",
-                                    color: "orange",
+                                    width: "100%",
+                                    height: "100%",
+                                    backgroundColor: "red",
+                                    transition: `opacity ${transitiontime}s`,
+                                    opacity: opacity,
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    backgroundColor: "red",
                                 }}
                             >
-                                {innertext}
-                            </h2>
-                        </div>
-                    }
-                ></Webplane>
+                                <h2
+                                    style={{
+                                        fontSize: "200px",
+                                        cursor: "default",
+                                        color: "orange",
+                                    }}
+                                >
+                                    {opacity > 0 && innertext}
+                                </h2>
+                            </div>
+                        }
+                    ></Webplane>
+                )}
             </group>
 
             {model}

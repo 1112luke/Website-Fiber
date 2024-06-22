@@ -18,9 +18,9 @@ export default function About() {
     var [cuberot, setcuberot] = useState([0.3, -0.2, -1.6]);
     var rotspeed = useRef(0);
 
-    var cubeslide = useSlide([9.8, 5, 2.5], [9.8, 3, 2.5], 0.24, 0.26);
+    var cubeslide = useSlide([9.8, 5, 2.5], [9.8, 3, 2.5], 0.087, 0.1);
 
-    var frameslide = useSlide([10, -1, 2.5], [9.71, 2.12, 2.65], 0.24, 0.26);
+    var frameslide = useSlide([10, -1, 2.5], [9.71, 2.12, 2.65], 0.087, 0.1);
 
     function spinCube(img) {
         setcurrimg(img);

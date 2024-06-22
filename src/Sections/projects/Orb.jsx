@@ -60,14 +60,15 @@ export default function Orb({ setlookatpos, setcamrotate }) {
     }, []);
 
     useFrame((state, delta) => {
+        //rotate orb
         if (rotateref.current && rotating) {
             rotateref.current.rotateOnWorldAxis(
                 vectory.current.normalize(),
-                mouse.y * -2 * delta
+                mouse.y * -1.3 * delta
             );
             rotateref.current.rotateOnWorldAxis(
                 vectorx.current.normalize(),
-                mouse.x * -2 * delta
+                mouse.x * -1.3 * delta
             );
         }
     });

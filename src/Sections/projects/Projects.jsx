@@ -15,33 +15,37 @@ export default function Projects({ setlookatpos, setcamrotate }) {
     var scrolldat = useScroll();
 
     useFrame((state, delta) => {
-        textref.current.lookAt(state.camera.position);
+        if (textref.current) {
+            textref.current.lookAt(state.camera.position);
+        }
 
-        setinview(scrolldat.visible(0.5, 0.6));
+        setinview(scrolldat.visible(0.12, 0.6));
     });
 
     return (
         <group position={allposition}>
-            {/*text */}
-            <group ref={textref}>
-                <Text3D
-                    font="/assets/font.json"
-                    position={[-10, 8, 0]}
-                    rotation={[0, -0.1, 0]}
-                    scale={[5, 5, 5]}
-                >
-                    Projects
-                    <meshStandardMaterial color="#ffc600"></meshStandardMaterial>
-                </Text3D>
-            </group>
             {/*orb */}
             {inview && (
-                <group position={orbposition}>
-                    <Orb
-                        setlookatpos={setlookatpos}
-                        setcamrotate={setcamrotate}
-                    ></Orb>
-                </group>
+                <>
+                    {/*text */}
+                    <group ref={textref}>
+                        <Text3D
+                            font="/assets/font.json"
+                            position={[-10, 8, 0]}
+                            rotation={[0, -0.1, 0]}
+                            scale={[5, 5, 5]}
+                        >
+                            Projects
+                            <meshStandardMaterial color="#ffc600"></meshStandardMaterial>
+                        </Text3D>
+                    </group>
+                    <group position={orbposition}>
+                        <Orb
+                            setlookatpos={setlookatpos}
+                            setcamrotate={setcamrotate}
+                        ></Orb>
+                    </group>
+                </>
             )}
         </group>
     );

@@ -26,7 +26,7 @@ export default function Button({ text, scrollamount, scrollDat }) {
             }}
             id="button"
         >
-            <div>{text}</div>
+            <div style={{ color: "orange", fontSize: "25px" }}>{text}</div>
         </motion.div>
     );
 }

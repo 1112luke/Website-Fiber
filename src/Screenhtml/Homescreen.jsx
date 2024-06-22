@@ -32,20 +32,20 @@ export default function Homescreen() {
                     <ul>
                         <li>
                             <Button
-                                text="about"
-                                scrollamount={0.3}
+                                text="ABOUT"
+                                scrollamount={0.049}
                                 scrollDat={scrollDat}
                             ></Button>
                         </li>
                         <li>
                             <Button
-                                text="Projects"
-                                scrollamount={0.559}
+                                text="PROJECTS"
+                                scrollamount={0.18}
                                 scrollDat={scrollDat}
                             ></Button>
                         </li>
                         <li>
-                            <Button></Button>
+                            <Button text="Connect"></Button>
                         </li>
                         <li>
                             <Button></Button>
@@ -53,7 +53,7 @@ export default function Homescreen() {
                     </ul>
                 </div>
                 <div className="section">
-                    <div style={{ color: "black" }}>Luke Scholler</div>
+                    <div style={{ color: "orange" }}>Luke Scholler</div>
                 </div>
                 <div style={{ color: "white" }} className="footer">
                     <div>

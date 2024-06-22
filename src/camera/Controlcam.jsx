@@ -11,7 +11,7 @@ export default function Controlcam({ lookatpos, camrotate }) {
     var translateamount = useRef();
     var mouseevent = useRef();
     var loggingcam = false;
-    var logoffset = false;
+    var logoffset = true;
     var startingpos = useRef({
         x: -65,
         y: -45,
@@ -56,8 +56,9 @@ export default function Controlcam({ lookatpos, camrotate }) {
     }
 
     var paths = [
+        //starting position
         {
-            flex: 2,
+            flex: 1,
             x: 15,
             y: -23,
             z: 346,
@@ -68,7 +69,7 @@ export default function Controlcam({ lookatpos, camrotate }) {
         },
         //slow move towards hi im lke
         {
-            flex: 3,
+            flex: 1,
             x: 19,
             y: -21,
             z: 340,
@@ -79,7 +80,7 @@ export default function Controlcam({ lookatpos, camrotate }) {
         },
         //rotate the rest of the way there
         {
-            flex: 4,
+            flex: 1,
             x: 25.6,
             y: -20,
             z: 334,
@@ -90,7 +91,7 @@ export default function Controlcam({ lookatpos, camrotate }) {
         },
         //looking at cube and webplane
         {
-            flex: 4,
+            flex: 1,
             x: 25.6,
             y: -20,
             z: 334,
@@ -101,18 +102,29 @@ export default function Controlcam({ lookatpos, camrotate }) {
         },
         //turn to look at projects
         {
-            flex: 4,
-            x: 35,
-            y: -17.94,
-            z: 326,
+            flex: 2,
+            x: 29.12,
+            y: -14.92,
+            z: 267.88,
             xr: 0,
             yr: 0.8,
             zr: -0,
             ta: 0,
         },
-        //move forward towards projects
+        //hold steady at projects
         {
-            flex: 18,
+            flex: 2,
+            x: 29.12,
+            y: -14.9265,
+            z: 267.88,
+            xr: 0,
+            yr: 0.8,
+            zr: -0,
+            ta: 0,
+        },
+        //move forward towards bat
+        {
+            flex: 26,
             x: 0,
             y: 0,
             z: -20,
